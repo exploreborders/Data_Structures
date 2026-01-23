@@ -369,5 +369,4 @@ class DynamicProgramming:
                 if nums[i-1] <= j:
                     dp[i][j] = dp[i][j] or dp[i-1][j - nums[i-1]]
 
-        return dp[n][target]</content>
-<parameter name="filePath">chapter_10_dynamic_programming/code/dp_algorithms.py
+        return dp[n][target]
