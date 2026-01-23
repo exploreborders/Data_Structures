@@ -30,6 +30,7 @@ Each chapter has its own directory with:
 - [x] Chapter 4: Testing
 - [x] Chapter 5: Running Time Analysis
 - [x] Chapter 6: Stacks and Queues
+- [x] Chapter 7: Deques and Linked Lists
 
 ## Contributing
 This is a personal learning project. Feel free to fork and adapt.
