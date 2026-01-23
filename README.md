@@ -35,10 +35,12 @@ Each chapter has its own directory with:
 - [x] Chapter 9: Recursion
 - [x] Chapter 10: Dynamic Programming
 - [x] Chapter 11: Binary Search
-- [x] Chapter 12: Sorting Algorithms
-- [x] Chapter 13: Hash Tables
-- [x] Chapter 14: Trees
-- [x] Chapter 15: Binary Search Trees
+- [x] Chapter 12: Sorting
+- [x] Chapter 13: Sorting with Divide and Conquer
+- [x] Chapter 14: Selection
+- [x] Chapter 15: Mappings and Hash Tables
+- [x] Chapter 16: Trees
+- [x] Chapter 17: Binary Search Trees
 
 ## Contributing
 This is a personal learning project. Feel free to fork and adapt.
