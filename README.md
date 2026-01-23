@@ -80,7 +80,8 @@ jupyter lab notebooks/
 | **[`chapter_10_dynamic_programming.ipynb`](notebooks/chapter_10_dynamic_programming.ipynb)** | 10 | Dynamic Programming | DP tables, knapsack, LCS, coin change |
 | **[`chapter_12_14_sorting.ipynb`](notebooks/chapter_12_14_sorting.ipynb)** | 12-14 | Sorting & Selection | Algorithm comparisons, performance analysis, quickselect |
 | **[`chapter_15_hash_tables.ipynb`](notebooks/chapter_15_hash_tables.ipynb)** | 15 | Hash Tables | Interactive hash functions, collision resolution, performance |
-| *More coming soon...* | - | - | Tree visualizations, graph algorithms, priority queues |
+| **[`chapter_16_18_trees.ipynb`](notebooks/chapter_16_18_trees.ipynb)** | 16-18 | Trees & BSTs | Interactive tree structures, traversals, BST operations, AVL balancing |
+| *More coming soon...* | - | - | Graph algorithms, priority queues |
 
 ### 🎮 Interactive Features
 
