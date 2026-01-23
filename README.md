@@ -34,6 +34,7 @@ Each chapter has its own directory with:
 - [x] Chapter 8: Concatenating Doubly Linked Lists
 - [x] Chapter 9: Recursion
 - [x] Chapter 10: Dynamic Programming
+- [x] Chapter 11: Binary Search
 
 ## Contributing
 This is a personal learning project. Feel free to fork and adapt.
