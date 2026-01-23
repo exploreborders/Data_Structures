@@ -31,6 +31,7 @@ Each chapter has its own directory with:
 - [x] Chapter 2: Basic Python
 - [x] Chapter 3: Object-Oriented Programming
 - [x] Chapter 4: Testing
+- [x] Chapter 5: Running Time Analysis
 
 ## Contributing
 This is a personal learning project. Feel free to fork and adapt.
