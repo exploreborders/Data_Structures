@@ -27,6 +27,7 @@ Each chapter has its own directory with:
 - [x] Chapter 1: Overview
 - [x] Chapter 2: Basic Python
 - [x] Chapter 3: Object-Oriented Programming
+- [x] Chapter 4: Testing
 
 ## Contributing
 This is a personal learning project. Feel free to fork and adapt.
