@@ -10,9 +10,10 @@ This repository is dedicated to learning and exploring "A First Course on Data S
 
 ## Setup
 1. Clone the repository
-2. Install Python 3.x
-3. Install dependencies: `pip install -r requirements.txt`
-4. Run tests: `pytest`
+2. Create virtual environment: `python3 -m venv venv`
+3. Activate: `source venv/bin/activate`
+4. Install dependencies: `pip install -r requirements.txt`
+5. Run tests: `pytest`
 
 ## Structure
 Each chapter has its own directory with:
@@ -23,7 +24,7 @@ Each chapter has its own directory with:
 - `README.md`: Chapter summary
 
 ## Progress
-- [ ] Chapter 1: Overview
+- [x] Chapter 1: Overview
 - [ ] Chapter 2: Basic Python
 - ... (more to be added)
 
