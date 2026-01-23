@@ -26,7 +26,7 @@ Each chapter has its own directory with:
 ## Progress
 - [x] Chapter 1: Overview
 - [x] Chapter 2: Basic Python
-- ... (more to be added)
+- [x] Chapter 3: Object-Oriented Programming
 
 ## Contributing
 This is a personal learning project. Feel free to fork and adapt.
