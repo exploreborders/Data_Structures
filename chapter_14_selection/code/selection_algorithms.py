@@ -378,6 +378,8 @@ class SelectionAnalysis:
         Returns:
             Analysis results
         """
+        import time
+
         results = {"random_pivot": [], "median_of_three": []}
 
         for _ in range(num_trials):

@@ -419,6 +419,15 @@ class SortingAnalysis:
             def __lt__(self, other):
                 return self.value < other.value
 
+            def __le__(self, other):
+                return self.value <= other.value
+
+            def __gt__(self, other):
+                return self.value > other.value
+
+            def __ge__(self, other):
+                return self.value >= other.value
+
             def __repr__(self):
                 return f"Item({self.value}, {self.id})"
 
@@ -431,8 +440,8 @@ class SortingAnalysis:
         merge_result = DivideConquerSorting.mergesort(arr)
         merge_stable = (
             merge_result[0].id == "a"
-            and merge_result[2].id == "c"
-            and merge_result[4].id == "e"
+            and merge_result[1].id == "c"
+            and merge_result[2].id == "e"
         )
         results["Mergesort"] = merge_stable
 
