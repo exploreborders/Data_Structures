@@ -25,7 +25,7 @@ Each chapter has its own directory with:
 
 ## Progress
 - [x] Chapter 1: Overview
-- [ ] Chapter 2: Basic Python
+- [x] Chapter 2: Basic Python
 - ... (more to be added)
 
 ## Contributing
