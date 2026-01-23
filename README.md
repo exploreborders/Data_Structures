@@ -78,7 +78,8 @@ jupyter lab notebooks/
 | **[`index.ipynb`](notebooks/index.ipynb)** | Overview | Curriculum guide | Progress tracking, navigation |
 | **[`chapter_05_complexity.ipynb`](notebooks/chapter_05_complexity.ipynb)** | 5 | Running Time Analysis | Complexity visualizations, timing demos |
 | **[`chapter_10_dynamic_programming.ipynb`](notebooks/chapter_10_dynamic_programming.ipynb)** | 10 | Dynamic Programming | DP tables, knapsack, LCS, coin change |
-| *More coming soon...* | - | - | Sorting comparisons, tree visualizations, graph algorithms |
+| **[`chapter_12_14_sorting.ipynb`](notebooks/chapter_12_14_sorting.ipynb)** | 12-14 | Sorting & Selection | Algorithm comparisons, performance analysis, quickselect |
+| *More coming soon...* | - | - | Hash tables, tree visualizations, graph algorithms |
 
 ### 🎮 Interactive Features
 
