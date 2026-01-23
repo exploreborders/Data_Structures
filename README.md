@@ -37,6 +37,7 @@ Each chapter has its own directory with:
 - [x] Chapter 11: Binary Search
 - [x] Chapter 12: Sorting Algorithms
 - [x] Chapter 13: Hash Tables
+- [x] Chapter 14: Trees
 
 ## Contributing
 This is a personal learning project. Feel free to fork and adapt.
