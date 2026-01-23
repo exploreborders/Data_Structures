@@ -4,6 +4,12 @@ Examples demonstrating Chapter 2 concepts interactively.
 Run this script to see outputs.
 """
 
+import sys
+import os
+
+# Add root directory to path so imports work
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
+
 from chapter_2_basic_python.code.concepts import *
 
 print("=== Chapter 2: Basic Python Examples ===\n")
