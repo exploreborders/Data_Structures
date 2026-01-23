@@ -35,6 +35,7 @@ Each chapter has its own directory with:
 - [x] Chapter 9: Recursion
 - [x] Chapter 10: Dynamic Programming
 - [x] Chapter 11: Binary Search
+- [x] Chapter 12: Sorting Algorithms
 
 ## Contributing
 This is a personal learning project. Feel free to fork and adapt.
