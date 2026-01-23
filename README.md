@@ -31,6 +31,9 @@ Each chapter has its own directory with:
 - [x] Chapter 5: Running Time Analysis
 - [x] Chapter 6: Stacks and Queues
 - [x] Chapter 7: Deques and Linked Lists
+- [x] Chapter 8: Concatenating Doubly Linked Lists
+- [x] Chapter 9: Recursion
+- [x] Chapter 10: Dynamic Programming
 
 ## Contributing
 This is a personal learning project. Feel free to fork and adapt.
