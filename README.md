@@ -2,9 +2,6 @@
 
 This repository is dedicated to learning and exploring "A First Course on Data Structures in Python" by Donald R. Sheehy. We'll implement concepts chapter by chapter, with code examples, tests, and personal notes.
 
-## 📖 Complete Guide
-For detailed explanations of all concepts covered so far, see [COMPREHENSIVE_GUIDE.md](COMPREHENSIVE_GUIDE.md) - a complete text-based guide explaining every concept with examples and practical applications.
-
 ## Learning Goals
 - Master Python fundamentals and object-oriented programming
 - Understand data structures and algorithms
