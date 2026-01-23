@@ -41,6 +41,11 @@ Each chapter has its own directory with:
 - [x] Chapter 15: Mappings and Hash Tables
 - [x] Chapter 16: Trees
 - [x] Chapter 17: Binary Search Trees
+- [x] Chapter 18: Balanced Trees (AVL)
+- [x] Chapter 19: Priority Queues
+- [x] Chapter 20: Graphs
+- [x] Chapter 21: Advanced Graph Search
+- [x] Chapter 22: Sets (Union-Find)
 
 ## Contributing
 This is a personal learning project. Feel free to fork and adapt.
