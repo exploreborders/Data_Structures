@@ -531,5 +531,3 @@ class HashTableAnalysis:
         results["final_size"] = len(ht)
         results["load_factor"] = ht.get_load_factor()
 
-        return results</content>
-<parameter name="filePath">chapter_13_hash_tables/code/hash_table_implementations.py

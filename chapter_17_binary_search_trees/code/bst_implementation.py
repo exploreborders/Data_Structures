@@ -15,9 +15,9 @@ class BSTNode:
     def __init__(self, key: Any, value: Any):
         self.key = key
         self.value = value
-        self.left: Optional['BSTNode'] = None
-        self.right: Optional['BSTNode'] = None
-        self.parent: Optional['BSTNode'] = None  # Optional parent pointer
+        self.left: Optional["BSTNode"] = None
+        self.right: Optional["BSTNode"] = None
+        self.parent: Optional["BSTNode"] = None  # Optional parent pointer
         self.size = 1  # Size of subtree (for advanced operations)
 
     def __repr__(self) -> str:
@@ -270,7 +270,9 @@ class BinarySearchTree:
         self._collect_keys_in_range(self.root, low, high, result)
         return result
 
-    def _collect_keys_in_range(self, node: Optional[BSTNode], low: Any, high: Any, result: List[Any]) -> None:
+    def _collect_keys_in_range(
+        self, node: Optional[BSTNode], low: Any, high: Any, result: List[Any]
+    ) -> None:
         """Helper to collect keys in range."""
         if node is None:
             return
@@ -289,7 +291,9 @@ class BinarySearchTree:
         self._collect_values_in_range(self.root, low, high, result)
         return result
 
-    def _collect_values_in_range(self, node: Optional[BSTNode], low: Any, high: Any, result: List[Any]) -> None:
+    def _collect_values_in_range(
+        self, node: Optional[BSTNode], low: Any, high: Any, result: List[Any]
+    ) -> None:
         """Helper to collect values in range."""
         if node is None:
             return
@@ -308,7 +312,9 @@ class BinarySearchTree:
         self._inorder_helper(self.root, result)
         return result
 
-    def _inorder_helper(self, node: Optional[BSTNode], result: List[Tuple[Any, Any]]) -> None:
+    def _inorder_helper(
+        self, node: Optional[BSTNode], result: List[Tuple[Any, Any]]
+    ) -> None:
         """Inorder traversal helper."""
         if node:
             self._inorder_helper(node.left, result)
@@ -321,7 +327,9 @@ class BinarySearchTree:
         self._preorder_helper(self.root, result)
         return result
 
-    def _preorder_helper(self, node: Optional[BSTNode], result: List[Tuple[Any, Any]]) -> None:
+    def _preorder_helper(
+        self, node: Optional[BSTNode], result: List[Tuple[Any, Any]]
+    ) -> None:
         """Preorder traversal helper."""
         if node:
             result.append((node.key, node.value))
@@ -334,7 +342,9 @@ class BinarySearchTree:
         self._postorder_helper(self.root, result)
         return result
 
-    def _postorder_helper(self, node: Optional[BSTNode], result: List[Tuple[Any, Any]]) -> None:
+    def _postorder_helper(
+        self, node: Optional[BSTNode], result: List[Tuple[Any, Any]]
+    ) -> None:
         """Postorder traversal helper."""
         if node:
             self._postorder_helper(node.left, result)
@@ -362,9 +372,11 @@ class BinarySearchTree:
 
     def is_valid_bst(self) -> bool:
         """Check if the tree maintains BST properties."""
-        return self._is_valid_bst_helper(self.root, float('-inf'), float('inf'))
+        return self._is_valid_bst_helper(self.root, float("-inf"), float("inf"))
 
-    def _is_valid_bst_helper(self, node: Optional[BSTNode], min_val: Any, max_val: Any) -> bool:
+    def _is_valid_bst_helper(
+        self, node: Optional[BSTNode], min_val: Any, max_val: Any
+    ) -> bool:
         """Helper to validate BST properties."""
         if node is None:
             return True
@@ -372,8 +384,9 @@ class BinarySearchTree:
         if not (min_val < node.key < max_val):
             return False
 
-        return (self._is_valid_bst_helper(node.left, min_val, node.key) and
-                self._is_valid_bst_helper(node.right, node.key, max_val))
+        return self._is_valid_bst_helper(
+            node.left, min_val, node.key
+        ) and self._is_valid_bst_helper(node.right, node.key, max_val)
 
     def get_height(self) -> int:
         """Get height of the tree."""
@@ -385,7 +398,9 @@ class BinarySearchTree:
         self._collect_balance_factors(self.root, factors)
         return factors
 
-    def _collect_balance_factors(self, node: Optional[BSTNode], factors: List[int]) -> None:
+    def _collect_balance_factors(
+        self, node: Optional[BSTNode], factors: List[int]
+    ) -> None:
         """Collect balance factors for all nodes."""
         if node:
             left_height = node.left.get_height() if node.left else 0
@@ -437,7 +452,9 @@ class BSTAnalysis:
         return bst
 
     @staticmethod
-    def benchmark_bst_operations(bst: BinarySearchTree, num_operations: int = 1000) -> Dict[str, float]:
+    def benchmark_bst_operations(
+        bst: BinarySearchTree, num_operations: int = 1000
+    ) -> Dict[str, float]:
         """Benchmark BST operations."""
         import time
 
@@ -466,7 +483,7 @@ class BSTAnalysis:
             "insert_time": insert_time,
             "height": bst.get_height(),
             "size": len(bst),
-            "balance_factors": bst.get_balance_factor_distribution()
+            "balance_factors": bst.get_balance_factor_distribution(),
         }
 
     @staticmethod
@@ -477,13 +494,18 @@ class BSTAnalysis:
 
         # Calculate balance factors
         balance_factors = bst.get_balance_factor_distribution()
-        avg_balance = sum(abs(bf) for bf in balance_factors) / len(balance_factors) if balance_factors else 0
+        avg_balance = (
+            sum(abs(bf) for bf in balance_factors) / len(balance_factors)
+            if balance_factors
+            else 0
+        )
 
         # Check if balanced
         is_balanced = all(abs(bf) <= 1 for bf in balance_factors)
 
         # Calculate theoretical heights
         import math
+
         min_height = math.ceil(math.log2(size + 1)) - 1 if size > 0 else 0
         max_height = size - 1 if size > 0 else 0
 
@@ -494,6 +516,5 @@ class BSTAnalysis:
             "max_possible_height": max_height,
             "balance_factor_avg": avg_balance,
             "is_balanced": is_balanced,
-            "height_ratio": height / max_height if max_height > 0 else 0
-        }</content>
-<parameter name="filePath">chapter_15_binary_search_trees/code/bst_implementation.py
+            "height_ratio": height / max_height if max_height > 0 else 0,
+        }

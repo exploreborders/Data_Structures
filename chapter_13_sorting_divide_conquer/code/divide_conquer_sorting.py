@@ -8,7 +8,7 @@ demonstrating how these algorithms achieve O(n log n) performance through recurs
 from typing import List, TypeVar, Callable
 import time
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class DivideConquerSorting:
@@ -84,6 +84,7 @@ class DivideConquerSorting:
             >>> arr
             [1, 1, 3, 4, 5]
         """
+
         def _mergesort_helper(start: int, end: int) -> None:
             if end - start <= 1:
                 return
@@ -258,7 +259,9 @@ class DivideConquerSorting:
         """
         arr_copy = arr.copy()
         max_depth = 2 * (len(arr_copy).bit_length() - 1)  # 2 * log2(n)
-        DivideConquerSorting._introsort_helper(arr_copy, 0, len(arr_copy) - 1, max_depth)
+        DivideConquerSorting._introsort_helper(
+            arr_copy, 0, len(arr_copy) - 1, max_depth
+        )
         return arr_copy
 
     @staticmethod
@@ -326,7 +329,9 @@ class SortingAnalysis:
     """Analysis tools for divide and conquer sorting algorithms."""
 
     @staticmethod
-    def benchmark_sorting_algorithms(arr: List[int], algorithms: List[Callable]) -> dict:
+    def benchmark_sorting_algorithms(
+        arr: List[int], algorithms: List[Callable]
+    ) -> dict:
         """
         Benchmark multiple sorting algorithms on the same data.
 
@@ -353,7 +358,7 @@ class SortingAnalysis:
 
             results[name] = {
                 "time": end_time - start_time,
-                "correct": SortingAnalysis.is_sorted(result)
+                "correct": SortingAnalysis.is_sorted(result),
             }
 
         return results
@@ -404,6 +409,7 @@ class SortingAnalysis:
         Returns:
             Dictionary showing stability results
         """
+
         # Create array with equal elements but different identities
         class Item:
             def __init__(self, value, id):
@@ -417,14 +423,17 @@ class SortingAnalysis:
                 return f"Item({self.value}, {self.id})"
 
         # Array with duplicate values
-        arr = [Item(1, 'a'), Item(2, 'b'), Item(1, 'c'), Item(3, 'd'), Item(1, 'e')]
+        arr = [Item(1, "a"), Item(2, "b"), Item(1, "c"), Item(3, "d"), Item(1, "e")]
 
         results = {}
 
         # Test mergesort (should be stable)
         merge_result = DivideConquerSorting.mergesort(arr)
-        merge_stable = (merge_result[0].id == 'a' and merge_result[2].id == 'c' and
-                       merge_result[4].id == 'e')
+        merge_stable = (
+            merge_result[0].id == "a"
+            and merge_result[2].id == "c"
+            and merge_result[4].id == "e"
+        )
         results["Mergesort"] = merge_stable
 
         # Test quicksort (may not be stable)
@@ -459,11 +468,14 @@ class SortingAnalysis:
                     return func(*args, **kwargs)
                 finally:
                     current_depth -= 1
+
             return wrapper
 
         if algorithm == "quicksort":
             original_helper = DivideConquerSorting._quicksort_helper
-            DivideConquerSorting._quicksort_helper = track_depth(DivideConquerSorting._quicksort_helper)
+            DivideConquerSorting._quicksort_helper = track_depth(
+                DivideConquerSorting._quicksort_helper
+            )
 
             try:
                 arr_copy = arr.copy()
@@ -471,5 +483,4 @@ class SortingAnalysis:
             finally:
                 DivideConquerSorting._quicksort_helper = original_helper
 
-        return max_depth</content>
-<parameter name="filePath">chapter_13_sorting_divide_conquer/code/divide_conquer_sorting.py
+        return max_depth

@@ -649,5 +649,3 @@ class TreeAnalysis:
         root.left = TreeAnalysis.build_tree_from_traversals(left_inorder, left_preorder)
         root.right = TreeAnalysis.build_tree_from_traversals(right_inorder, right_preorder)
 
-        return root</content>
-<parameter name="filePath">chapter_14_trees/code/tree_implementations.py
