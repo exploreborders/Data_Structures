@@ -82,7 +82,7 @@ jupyter lab notebooks/
 | **[`chapter_15_hash_tables.ipynb`](notebooks/chapter_15_hash_tables.ipynb)** | 15 | Hash Tables | Interactive hash functions, collision resolution, performance |
 | **[`chapter_16_18_trees.ipynb`](notebooks/chapter_16_18_trees.ipynb)** | 16-18 | Trees & BSTs | Interactive tree structures, traversals, BST operations, AVL balancing |
 | **[`chapter_19_heaps.ipynb`](notebooks/chapter_19_heaps.ipynb)** | 19 | Priority Queues & Heaps | Interactive heap operations, priority queue applications, heap sort |
-| *More coming soon...* | - | - | Graph algorithms |
+| **[`chapter_20_21_graphs.ipynb`](notebooks/chapter_20_21_graphs.ipynb)** | 20-21 | Graph Algorithms | Interactive graph representations, traversals, shortest paths, MSTs |
 
 ### 🎮 Interactive Features
 
