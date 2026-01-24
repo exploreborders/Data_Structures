@@ -14,8 +14,8 @@ class TreeNode:
 
     def __init__(self, value: Any):
         self.value = value
-        self.left: Optional['TreeNode'] = None
-        self.right: Optional['TreeNode'] = None
+        self.left: Optional["TreeNode"] = None
+        self.right: Optional["TreeNode"] = None
         self.height = 1  # Used for AVL trees
 
     def __repr__(self) -> str:
@@ -160,7 +160,11 @@ class BinaryTree:
         """Helper for counting nodes."""
         if not node:
             return 0
-        return 1 + self._count_nodes_helper(node.left) + self._count_nodes_helper(node.right)
+        return (
+            1
+            + self._count_nodes_helper(node.left)
+            + self._count_nodes_helper(node.right)
+        )
 
     def count_leaves(self) -> int:
         """Count number of leaf nodes."""
@@ -172,7 +176,81 @@ class BinaryTree:
             return 0
         if node.is_leaf():
             return 1
-        return self._count_leaves_helper(node.left) + self._count_leaves_helper(node.right)
+        return self._count_leaves_helper(node.left) + self._count_leaves_helper(
+            node.right
+        )
+
+    def is_complete(self) -> bool:
+        """
+        Check if the tree is complete (all levels filled except possibly the last,
+        and all nodes as left as possible).
+        """
+        if not self.root:
+            return True
+
+        from collections import deque
+
+        queue = deque([self.root])
+        found_none = False
+
+        while queue:
+            node = queue.popleft()
+
+            if node is None:
+                found_none = True
+                continue
+
+            if found_none:
+                # If we've seen a None and now see a non-None, it's not complete
+                return False
+
+            queue.append(node.left)
+            queue.append(node.right)
+
+        return True
+
+    def is_full(self) -> bool:
+        """
+        Check if the tree is full (every node has either 0 or 2 children).
+        """
+        return self._is_full_helper(self.root)
+
+    def _is_full_helper(self, node: Optional[TreeNode]) -> bool:
+        """Helper for checking if tree is full."""
+        if not node:
+            return True
+
+        # If node has one child but not the other, it's not full
+        if (node.left is None) != (node.right is None):
+            return False
+
+        # Recursively check subtrees
+        return self._is_full_helper(node.left) and self._is_full_helper(node.right)
+
+    def is_balanced(self) -> bool:
+        """
+        Check if the tree is height-balanced (difference in height of left and right
+        subtrees is at most 1 for every node).
+        """
+
+        def check_balance(node: Optional[TreeNode]) -> Tuple[bool, int]:
+            if not node:
+                return True, 0
+
+            left_balanced, left_height = check_balance(node.left)
+            right_balanced, right_height = check_balance(node.right)
+
+            balanced = (
+                left_balanced
+                and right_balanced
+                and abs(left_height - right_height) <= 1
+            )
+            height = 1 + max(left_height, right_height)
+
+            return balanced, height
+
+        balanced, _ = check_balance(self.root)
+        return balanced
 
     def find_max(self) -> Any:
         """Find maximum value in the tree."""
@@ -217,7 +295,39 @@ class BinarySearchTree(BinaryTree):
         """Search for a value in the BST."""
         return self._search_helper(self.root, value) is not None
 
-    def _search_helper(self, node: Optional[TreeNode], value: Any) -> Optional[TreeNode]:
+    def search_with_path(self, value: Any) -> tuple[bool, List[Any]]:
+        """
+        Search for a value and return both found status and search path.
+
+        Args:
+            value: Value to search for
+
+        Returns:
+            Tuple of (found: bool, path: List of node values visited)
+        """
+        path = []
+        found = self._search_with_path_helper(self.root, value, path)
+        return found, path
+
+    def _search_with_path_helper(
+        self, node: Optional[TreeNode], value: Any, path: List[Any]
+    ) -> bool:
+        """Helper for search with path tracking."""
+        if not node:
+            return False
+
+        path.append(node.value)
+
+        if node.value == value:
+            return True
+        elif value < node.value:
+            return self._search_with_path_helper(node.left, value, path)
+        else:
+            return self._search_with_path_helper(node.right, value, path)
+
+    def _search_helper(
+        self, node: Optional[TreeNode], value: Any
+    ) -> Optional[TreeNode]:
         """Helper for searching."""
         if not node or node.value == value:
             return node
@@ -248,7 +358,9 @@ class BinarySearchTree(BinaryTree):
         """Delete a value from the BST."""
         self.root = self._delete_helper(self.root, value)
 
-    def _delete_helper(self, node: Optional[TreeNode], value: Any) -> Optional[TreeNode]:
+    def _delete_helper(
+        self, node: Optional[TreeNode], value: Any
+    ) -> Optional[TreeNode]:
         """Helper for deletion."""
         if not node:
             return None
@@ -296,9 +408,11 @@ class BinarySearchTree(BinaryTree):
 
     def is_valid_bst(self) -> bool:
         """Check if the tree is a valid BST."""
-        return self._is_valid_bst_helper(self.root, float('-inf'), float('inf'))
+        return self._is_valid_bst_helper(self.root, float("-inf"), float("inf"))
 
-    def _is_valid_bst_helper(self, node: Optional[TreeNode], min_val: Any, max_val: Any) -> bool:
+    def _is_valid_bst_helper(
+        self, node: Optional[TreeNode], min_val: Any, max_val: Any
+    ) -> bool:
         """Helper for BST validation."""
         if not node:
             return True
@@ -306,8 +420,32 @@ class BinarySearchTree(BinaryTree):
         if not (min_val < node.value < max_val):
             return False
 
-        return (self._is_valid_bst_helper(node.left, min_val, node.value) and
-                self._is_valid_bst_helper(node.right, node.value, max_val))
+        return self._is_valid_bst_helper(
+            node.left, min_val, node.value
+        ) and self._is_valid_bst_helper(node.right, node.value, max_val)
+
+    def copy(self) -> "BinarySearchTree":
+        """
+        Create a deep copy of the BST.
+
+        Returns:
+            New BinarySearchTree with copied structure
+        """
+        new_tree = BinarySearchTree()
+        if self.root:
+            new_tree.root = self._copy_helper(self.root)
+        return new_tree
+
+    def _copy_helper(self, node: Optional[TreeNode]) -> Optional[TreeNode]:
+        """Helper for deep copying tree nodes."""
+        if not node:
+            return None
+
+        new_node = TreeNode(node.value)
+        new_node.left = self._copy_helper(node.left)
+        new_node.right = self._copy_helper(node.right)
+        new_node.height = node.height  # Copy height for AVL trees
+        return new_node
 
 
 class AVLTree(BinarySearchTree):
@@ -353,7 +491,9 @@ class AVLTree(BinarySearchTree):
 
         return node
 
-    def _delete_helper(self, node: Optional[TreeNode], value: Any) -> Optional[TreeNode]:
+    def _delete_helper(
+        self, node: Optional[TreeNode], value: Any
+    ) -> Optional[TreeNode]:
         """AVL delete with balancing."""
         # Standard BST delete
         if not node:
@@ -476,7 +616,10 @@ class Heap:
         """Bubble up element to maintain heap property."""
         while i > 0 and self._compare(self.heap[i], self.heap[self._parent(i)]):
             # Swap with parent
-            self.heap[i], self.heap[self._parent(i)] = self.heap[self._parent(i)], self.heap[i]
+            self.heap[i], self.heap[self._parent(i)] = (
+                self.heap[self._parent(i)],
+                self.heap[i],
+            )
             i = self._parent(i)
 
     def extract_top(self) -> Any:
@@ -533,7 +676,7 @@ class Heap:
         return len(self.heap) == 0
 
     @classmethod
-    def heapify(cls, arr: List[Any], max_heap: bool = True) -> 'Heap':
+    def heapify(cls, arr: List[Any], max_heap: bool = True) -> "Heap":
         """Build heap from array in O(n) time."""
         heap = cls(max_heap)
         heap.heap = arr.copy()
@@ -569,6 +712,7 @@ class TreeAnalysis:
     @staticmethod
     def is_balanced_bst(root: Optional[TreeNode]) -> bool:
         """Check if BST is height-balanced."""
+
         def check_balance(node: Optional[TreeNode]) -> Tuple[bool, int]:
             if not node:
                 return True, 0
@@ -576,7 +720,11 @@ class TreeAnalysis:
             left_balanced, left_height = check_balance(node.left)
             right_balanced, right_height = check_balance(node.right)
 
-            balanced = left_balanced and right_balanced and abs(left_height - right_height) <= 1
+            balanced = (
+                left_balanced
+                and right_balanced
+                and abs(left_height - right_height) <= 1
+            )
             height = 1 + max(left_height, right_height)
 
             return balanced, height
@@ -587,6 +735,7 @@ class TreeAnalysis:
     @staticmethod
     def tree_diameter(root: Optional[TreeNode]) -> int:
         """Find the diameter of the tree (longest path between any two nodes)."""
+
         def diameter_helper(node: Optional[TreeNode]) -> Tuple[int, int]:
             if not node:
                 return 0, 0
@@ -607,13 +756,15 @@ class TreeAnalysis:
         return diameter
 
     @staticmethod
-    def lowest_common_ancestor(root: Optional[TreeNode], p: Any, q: Any) -> Optional[TreeNode]:
+    def lowest_common_ancestor(
+        root: Optional[TreeNode], p: Any, q: Any
+    ) -> Optional[TreeNode]:
         """Find lowest common ancestor of two nodes."""
         if not root:
             return None
 
         # For BST, we can optimize
-        if hasattr(root, 'left') and hasattr(root, 'right'):  # Assume BST
+        if hasattr(root, "left") and hasattr(root, "right"):  # Assume BST
             if p > root.value and q > root.value:
                 return TreeAnalysis.lowest_common_ancestor(root.right, p, q)
             elif p < root.value and q < root.value:
@@ -627,7 +778,9 @@ class TreeAnalysis:
         return None
 
     @staticmethod
-    def build_tree_from_traversals(inorder: List[Any], preorder: List[Any]) -> Optional[TreeNode]:
+    def build_tree_from_traversals(
+        inorder: List[Any], preorder: List[Any]
+    ) -> Optional[TreeNode]:
         """Build binary tree from inorder and preorder traversals."""
         if not inorder or not preorder:
             return None
@@ -641,11 +794,12 @@ class TreeAnalysis:
 
         # Recursively build left and right subtrees
         left_inorder = inorder[:root_index]
-        right_inorder = inorder[root_index + 1:]
+        right_inorder = inorder[root_index + 1 :]
 
-        left_preorder = preorder[1:1 + len(left_inorder)]
-        right_preorder = preorder[1 + len(left_inorder):]
+        left_preorder = preorder[1 : 1 + len(left_inorder)]
+        right_preorder = preorder[1 + len(left_inorder) :]
 
         root.left = TreeAnalysis.build_tree_from_traversals(left_inorder, left_preorder)
-        root.right = TreeAnalysis.build_tree_from_traversals(right_inorder, right_preorder)
-
+        root.right = TreeAnalysis.build_tree_from_traversals(
+            right_inorder, right_preorder
+        )
