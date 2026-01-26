@@ -316,45 +316,30 @@ class MinimumSpanningTrees:
 
     @staticmethod
     def prim_mst(graph: Graph[str]) -> List[Tuple[str, str, float]]:
-        """
-        Prim's algorithm for Minimum Spanning Tree.
-
-        Args:
-            graph: Undirected weighted graph
-
-        Returns:
-            List of edges in MST: (u, v, weight)
-        """
-        if not graph.weighted or graph.directed:
-            raise ValueError("Prim's algorithm requires undirected weighted graph")
-
         mst = []
         visited = set()
-        min_heap = []  # (weight, vertex, parent)
+        min_heap = []
 
-        # Start with arbitrary vertex
         start_vertex = next(iter(graph.vertices))
         visited.add(start_vertex)
 
-        # Add all edges from start vertex to heap
-        for neighbor, weight in graph.get_neighbors(start_vertex):
+        # Add edges from start vertex
+        for neighbor, weight in graph.get_neighbors(start_vertex).items():  # <- .items()
             heapq.heappush(min_heap, (weight, neighbor, start_vertex))
 
         while min_heap and len(visited) < len(graph.vertices):
             weight, vertex, parent = heapq.heappop(min_heap)
-
             if vertex in visited:
                 continue
-
             visited.add(vertex)
             mst.append((parent, vertex, weight))
 
-            # Add edges from newly visited vertex
-            for neighbor, edge_weight in graph.get_neighbors(vertex):
+            for neighbor, edge_weight in graph.get_neighbors(vertex).items():  # <- .items()
                 if neighbor not in visited:
                     heapq.heappush(min_heap, (edge_weight, neighbor, vertex))
 
         return mst
+
 
     @staticmethod
     def kruskal_mst(graph: Graph[str]) -> List[Tuple[str, str, float]]:
@@ -373,9 +358,10 @@ class MinimumSpanningTrees:
         # Sort all edges by weight
         edges = []
         for u in graph.vertices:
-            for v, weight in graph.get_neighbors(u):
+            for v, weight in graph.get_neighbors(u).items():
                 if u < v:  # Avoid duplicates
                     edges.append((weight, u, v))
+
 
         edges.sort()
 
