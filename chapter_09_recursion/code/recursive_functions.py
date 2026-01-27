@@ -246,5 +246,4 @@ def count_elements_recursive(items):
     if not items:  # Base case: empty list
         return 0
     else:  # Recursive case: 1 + count of rest
-        return 1 + count_elements_recursive(items[1:])</content>
-<parameter name="filePath">chapter_9_recursion/code/recursive_functions.py
+        return 1 + count_elements_recursive(items[1:])

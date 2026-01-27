@@ -11,7 +11,7 @@ import os
 from typing import Dict, List, Tuple
 
 # Add the code directory to the path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'code'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "code"))
 
 from dp_algorithms import DynamicProgramming
 
@@ -21,16 +21,16 @@ def print_dp_table(table: List[List[int]], title: str = "DP Table"):
     print(f"\n{title}:")
     print("   ", end="")
     for j in range(len(table[0])):
-        print("3d", end="")
+        print(f"{j:3d}", end="")
     print()
 
     for i, row in enumerate(table):
-        print("2d", end="")
+        print(f"{i:2d}", end="")
         for val in row:
-            if val == float('inf') or val == sys.maxsize:
+            if val == float("inf") or val == sys.maxsize:
                 print(" ∞ ", end="")
             else:
-                print("3d", end="")
+                print(f"{val:3d}", end="")
         print()
 
 
@@ -59,9 +59,9 @@ def demonstrate_fibonacci_approaches():
             result = n
             print(f"{indent}  → Base case: {result}")
         else:
-            print(f"{indent}  → Computing fib({n-1}) + fib({n-2})")
-            a = fib_memo(n-1, depth+1)
-            b = fib_memo(n-2, depth+1)
+            print(f"{indent}  → Computing fib({n - 1}) + fib({n - 2})")
+            a = fib_memo(n - 1, depth + 1)
+            b = fib_memo(n - 2, depth + 1)
             result = a + b
             print(f"{indent}  → Result: {a} + {b} = {result}")
 
@@ -82,8 +82,10 @@ def demonstrate_fibonacci_approaches():
     print(f"Base cases: F(0)={dp[0]}, F(1)={dp[1]}")
 
     for i in range(2, n + 1):
-        dp[i] = dp[i-1] + dp[i-2]
-        print("2d")
+        dp[i] = dp[i - 1] + dp[i - 2]
+        print(
+            f"F({i}) = dp[{i - 1}] + dp[{i - 2}] = {dp[i - 1]} + {dp[i - 2]} = {dp[i]}"
+        )
 
     print(f"\nFinal DP array: {dp}")
     print(f"Result: F({n}) = {dp[n]}")
@@ -117,22 +119,26 @@ def demonstrate_knapsack_visualization():
 
         for w in range(capacity + 1):
             # Don't take item
-            dont_take = dp[i-1][w]
+            dont_take = dp[i - 1][w]
 
             # Take item (if possible)
             if item_weight <= w:
-                take = item_value + dp[i-1][w - item_weight]
+                take = item_value + dp[i - 1][w - item_weight]
             else:
-                take = float('-inf')  # Impossible
+                take = float("-inf")  # Impossible
 
             # Choose maximum
             dp[i][w] = max(dont_take, take)
 
             if w <= 6:  # Only show first few columns for readability
-                choice = "TAKE" if dp[i][w] == take and take != float('-inf') else "SKIP"
-                print(f"  W={w}: Skip={dont_take}, Take={take if take != float('-inf') else 'N/A'} → Choose {choice} → {dp[i][w]}")
+                choice = (
+                    "TAKE" if dp[i][w] == take and take != float("-inf") else "SKIP"
+                )
+                print(
+                    f"  W={w}: Skip={dont_take}, Take={take if take != float('-inf') else 'N/A'} → Choose {choice} → {dp[i][w]}"
+                )
 
-        print_dp_table(dp[:i+1], f"After processing item {i}")
+        print_dp_table(dp[: i + 1], f"After processing item {i}")
 
     # Extract solution
     max_value = dp[n][capacity]
@@ -142,9 +148,9 @@ def demonstrate_knapsack_visualization():
     selected = []
     w = capacity
     for i in range(n, 0, -1):
-        if dp[i][w] != dp[i-1][w]:  # Item was taken
-            selected.append(i-1)
-            w -= weights[i-1]
+        if dp[i][w] != dp[i - 1][w]:  # Item was taken
+            selected.append(i - 1)
+            w -= weights[i - 1]
 
     print(f"Selected items (0-based indices): {selected[::-1]}")
 
@@ -175,32 +181,39 @@ def demonstrate_lcs_visualization():
 
     for i in range(1, m + 1):
         for j in range(1, n + 1):
-            if X[i-1] == Y[j-1]:
-                dp[i][j] = dp[i-1][j-1] + 1
-                print(f"X[{i-1}]='{X[i-1]}' == Y[{j-1}]='{Y[j-1]}' → dp[{i}][{j}] = {dp[i-1][j-1]} + 1 = {dp[i][j]}")
+            if X[i - 1] == Y[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+                print(
+                    f"X[{i - 1}]='{X[i - 1]}' == Y[{j - 1}]='{Y[j - 1]}' → dp[{i}][{j}] = {dp[i - 1][j - 1]} + 1 = {dp[i][j]}"
+                )
             else:
-                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
-                choice = "UP" if dp[i][j] == dp[i-1][j] else "LEFT"
-                print(f"X[{i-1}]='{X[i-1]}' != Y[{j-1}]='{Y[j-1]}' → dp[{i}][{j}] = max({dp[i-1][j]}, {dp[i][j-1]}) = {dp[i][j]} ({choice})")
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+                choice = "UP" if dp[i][j] == dp[i - 1][j] else "LEFT"
+                print(
+                    f"X[{i - 1}]='{X[i - 1]}' != Y[{j - 1}]='{Y[j - 1]}' → dp[{i}][{j}] = max({dp[i - 1][j]}, {dp[i][j - 1]}) = {dp[i][j]} ({choice})"
+                )
 
-        print_dp_table(dp, f"After processing X[{i-1}]='{X[i-1]}'")
+        print_dp_table(dp, f"After processing X[{i - 1}]='{X[i - 1]}'")
 
     # Extract LCS
     lcs = []
     i, j = m, n
-    print("
-Step 3: Reconstruct LCS by backtracking:")
+    print("\nStep 3: Reconstruct LCS by backtracking:")
     while i > 0 and j > 0:
-        if X[i-1] == Y[j-1]:
-            lcs.append(X[i-1])
-            print(f"Match at ({i},{j}): '{X[i-1]}' - moving diagonally")
+        if X[i - 1] == Y[j - 1]:
+            lcs.append(X[i - 1])
+            print(f"Match at ({i},{j}): '{X[i - 1]}' - moving diagonally")
             i -= 1
             j -= 1
-        elif dp[i-1][j] > dp[i][j-1]:
-            print(f"No match at ({i},{j}) - moving up (from {dp[i][j]} to {dp[i-1][j]})")
+        elif dp[i - 1][j] > dp[i][j - 1]:
+            print(
+                f"No match at ({i},{j}) - moving up (from {dp[i][j]} to {dp[i - 1][j]})"
+            )
             i -= 1
         else:
-            print(f"No match at ({i},{j}) - moving left (from {dp[i][j]} to {dp[i][j-1]})")
+            print(
+                f"No match at ({i},{j}) - moving left (from {dp[i][j]} to {dp[i][j - 1]})"
+            )
             j -= 1
 
     lcs.reverse()
@@ -225,7 +238,7 @@ def demonstrate_coin_change_visualization():
     print("Step 1: Initialize DP array")
     print("dp[i] = minimum coins to make amount i")
     print(f"dp[0] = 0 (base case)")
-    print(f"Initial dp: {dp[:min(8, len(dp))]}... (showing first 8 values)")
+    print(f"Initial dp: {dp[: min(8, len(dp))]}... (showing first 8 values)")
 
     for coin in coins:
         print(f"\nStep 2: Process coin {coin}")
@@ -234,7 +247,9 @@ def demonstrate_coin_change_visualization():
                 new_value = dp[amt - coin] + 1
                 if new_value < dp[amt]:
                     dp[amt] = new_value
-                    print(f"  Amount {amt}: dp[{amt}] = min({dp[amt]}, dp[{amt-coin}] + 1) = {dp[amt]}")
+                    print(
+                        f"  Amount {amt}: dp[{amt}] = min({dp[amt]}, dp[{amt - coin}] + 1) = {dp[amt]}"
+                    )
 
         print(f"After coin {coin}: dp = {dp}")
 
@@ -262,6 +277,5 @@ def main():
     print("• Backtracking through tables reconstructs the actual solution")
 
 
-if __name__ == '__main__':
-    main()</content>
-<parameter name="filePath">chapter_10_dynamic_programming/examples/dp_table_visualization.py
+if __name__ == "__main__":
+    main()

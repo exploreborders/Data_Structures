@@ -323,5 +323,4 @@ def demonstrate_linked_list_recursion():
 
 
 if __name__ == '__main__':
-    demonstrate_linked_list_recursion()</content>
-<parameter name="filePath">chapter_09_recursion/code/linked_list_recursion.py
+    demonstrate_linked_list_recursion()

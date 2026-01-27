@@ -12,9 +12,13 @@ import os
 from typing import List
 
 # Add the code directory to the path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'code'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "code"))
 
-from binary_search_algorithms import BinarySearch, BinarySearchApplications, AdvancedSearch
+from binary_search_algorithms import (
+    BinarySearch,
+    BinarySearchApplications,
+    AdvancedSearch,
+)
 
 
 def time_function(func, *args, **kwargs):
@@ -53,7 +57,7 @@ def visualize_binary_search():
         mid = left + (right - left) // 2
 
         print(f"Step {steps}:")
-        print(f"  Search range: arr[{left}:{right+1}] = {arr[left:right+1]}")
+        print(f"  Search range: arr[{left}:{right + 1}] = {arr[left : right + 1]}")
         print(f"  Mid index: {mid}, Mid value: {arr[mid]}")
 
         if arr[mid] == target:
@@ -119,16 +123,14 @@ def demonstrate_applications():
     print("1. Square Root Calculation:")
     for x in [4, 9, 16, 25, 2]:
         sqrt_result = BinarySearchApplications.square_root_binary_search(x)
-        actual = x ** 0.5
+        actual = x**0.5
         error = abs(sqrt_result - actual)
-        print(".1f"
+        print(
+            f"  sqrt({x}) ≈ {sqrt_result:.1f} (actual: {actual:.1f}, error: {error:.1f})"
+        )
     # Peak finding
     print("\n2. Peak Finding:")
-    arrays = [
-        [1, 3, 2, 1],
-        [1, 2, 3, 4, 3],
-        [5, 4, 3, 2, 1]
-    ]
+    arrays = [[1, 3, 2, 1], [1, 2, 3, 4, 3], [5, 4, 3, 2, 1]]
 
     for arr in arrays:
         peak_idx = BinarySearchApplications.find_peak_element(arr)
@@ -166,14 +168,18 @@ def performance_comparison():
         _, linear_time = time_function(linear_search, arr, target)
 
         # Time binary search
-        _, binary_time = time_function(BinarySearch.binary_search_iterative, arr, target)
+        _, binary_time = time_function(
+            BinarySearch.binary_search_iterative, arr, target
+        )
 
         # Calculate speedup
-        speedup = linear_time / binary_time if binary_time > 0 else float('inf')
+        speedup = linear_time / binary_time if binary_time > 0 else float("inf")
 
         print("6d")
 
-    print("\nNote: Binary search requires sorted data. The 'sort once, search many times'")
+    print(
+        "\nNote: Binary search requires sorted data. The 'sort once, search many times'"
+    )
     print("      principle makes binary search extremely valuable in practice.")
 
 
@@ -224,9 +230,11 @@ def interactive_search_demo():
 
     while True:
         try:
-            target = input("\nEnter a number to search for (or 'quit' to exit): ").strip()
+            target = input(
+                "\nEnter a number to search for (or 'quit' to exit): "
+            ).strip()
 
-            if target.lower() == 'quit':
+            if target.lower() == "quit":
                 break
 
             target = int(target)
@@ -244,7 +252,10 @@ def interactive_search_demo():
 
                 # Show neighbors
                 if insert_pos > 0:
-                    print(f"  Between {arr[insert_pos-1]} (index {insert_pos-1}) and ", end="")
+                    print(
+                        f"  Between {arr[insert_pos - 1]} (index {insert_pos - 1}) and ",
+                        end="",
+                    )
                 if insert_pos < len(arr):
                     print(f"{arr[insert_pos]} (index {insert_pos})")
                 else:
@@ -266,8 +277,12 @@ def main():
     demonstrate_advanced_search()
 
     # Interactive demo (only if user wants it)
-    response = input("\nWould you like to try an interactive binary search demo? (y/n): ").strip().lower()
-    if response == 'y' or response == 'yes':
+    response = (
+        input("\nWould you like to try an interactive binary search demo? (y/n): ")
+        .strip()
+        .lower()
+    )
+    if response == "y" or response == "yes":
         interactive_search_demo()
 
     print("\n" + "=" * 60)
@@ -278,9 +293,10 @@ def main():
     print("3. O(log n) time complexity: Scales excellently to large datasets")
     print("4. Multiple variants: First/last occurrence, bounds, applications")
     print("5. Beyond arrays: Square root, peaks, rotated arrays, optimization")
-    print("\nBinary search is a fundamental algorithm that every programmer should master!")
+    print(
+        "\nBinary search is a fundamental algorithm that every programmer should master!"
+    )
 
 
-if __name__ == '__main__':
-    main()</content>
-<parameter name="filePath">chapter_11_binary_search/examples/binary_search_demo.py
+if __name__ == "__main__":
+    main()

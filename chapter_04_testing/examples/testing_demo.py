@@ -60,7 +60,8 @@ processor = StringProcessor()
 # Normal cases
 print(f"   Reverse 'hello': {processor.reverse('hello')}")
 print(f"   Word count 'hello world': {processor.count_words('hello world')}")
-print(f"   Capitalize 'hello world': {processor.capitalize_words('hello world')}")
+print(
+    f"   Capitalize 'hello world': {processor.capitalize_words('hello world')}")
 
 # Edge cases
 print(f"   Reverse empty string: '{processor.reverse('')}'")

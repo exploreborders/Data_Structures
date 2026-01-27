@@ -35,21 +35,23 @@ def demonstrate_fibonacci_evolution():
     print("1. Naive Recursion:")
     try:
         result, time_taken = time_function(DynamicProgramming.fibonacci_naive, 30)
-        print(".6f"    except RecursionError:
+        print(f"   Result: {result} (time: {time_taken:.6f}s)")
+    except RecursionError:
         print("   RecursionError - too slow/deep!")
 
     # Memoization
     print("\n2. Memoization (Top-Down DP):")
     result, time_taken = time_function(DynamicProgramming.fibonacci_memoization, 35)
-    print(".6f"
+    print(f"   Result: {result} (time: {time_taken:.6f}s)")
     # Tabulation
     print("\n3. Tabulation (Bottom-Up DP):")
     result, time_taken = time_function(DynamicProgramming.fibonacci_tabulation, 35)
-    print(".6f"
+    print(f"   Result: {result} (time: {time_taken:.6f}s)")
     # Larger values
     print("\n4. Tabulation for larger values:")
     result, time_taken = time_function(DynamicProgramming.fibonacci_tabulation, 100)
-    print(".6f"    print(f"   Result: {result:,} (that's a {len(str(result))}-digit number!)")
+    print(f"   Result: {result} (time: {time_taken:.6f}s)")
+    print(f"   Result: {result:,} (that's a {len(str(result))}-digit number!)")
 
     print("\nKey Insights:")
     print("- Naive recursion: O(2^n) - exponential explosion")
@@ -78,7 +80,7 @@ def demonstrate_knapsack_problem():
 
     print("Items available:")
     for name, weight, value in items:
-        print("15")
+        print(f"  {name:15} - {weight}kg, ${value}")
     print(f"\nKnapsack capacity: {capacity} kg")
     print("\nSolving with DP...")
 
@@ -91,7 +93,7 @@ def demonstrate_knapsack_problem():
     total_weight = 0
     for idx in selected_indices:
         name, weight, value = items[idx]
-        print("15")
+        print(f"  {name:15} - {weight}kg, ${value}")
         total_weight += weight
 
     print(f"Total weight: {total_weight}/{capacity} kg")
@@ -131,7 +133,7 @@ def demonstrate_lcs_problem():
     print("\nMore examples:")
     for s1, s2 in examples:
         length, lcs = DynamicProgramming.longest_common_subsequence(s1, s2)
-        print("12")
+        print(f"  {s1:12} vs {s2:12} -> LCS: '{lcs}' (length: {length})")
 
 
 def demonstrate_coin_change():
@@ -186,7 +188,7 @@ def demonstrate_edit_distance():
 
     for word1, word2 in word_pairs:
         distance = DynamicProgramming.edit_distance(word1, word2)
-        print("15")
+        print(f"  {word1:15} -> {word2:15} : distance = {distance}")
 
     # Explain operations
     print("\nOperations allowed:")
@@ -216,7 +218,7 @@ def demonstrate_subset_sum():
     for target in targets:
         exists = DynamicProgramming.subset_sum(nums, target)
         status = "✓ EXISTS" if exists else "✗ NO SUBSET"
-        print("2")
+        print(f"  Target {target:2d}: {status}")
 
         if exists:
             # Try to find one possible subset (simplified approach)
@@ -251,7 +253,7 @@ def demonstrate_performance_comparison():
         start = time.time()
         result = DynamicProgramming.subset_sum(nums, target)
         elapsed = time.time() - start
-        print("6.4f")
+        print(f"{target:6} | {elapsed:.4f}")
 
 
 def main():
@@ -276,9 +278,3 @@ def main():
     print("4. Choose memoization vs tabulation")
     print("5. Optimize space if possible")
     print("6. Test with small inputs first")
-    print("\nRemember: DP transforms exponential problems into polynomial ones!")
-
-
-if __name__ == '__main__':
-    main()</content>
-<parameter name="filePath">chapter_10_dynamic_programming/examples/dp_demonstrations.py

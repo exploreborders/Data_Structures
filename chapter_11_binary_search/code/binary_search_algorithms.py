@@ -495,5 +495,4 @@ class AdvancedSearch:
                 left = mid1 + 1
                 right = mid2 - 1
 
-        return -1</content>
-<parameter name="filePath">chapter_11_binary_search/code/binary_search_algorithms.py
+        return -1
