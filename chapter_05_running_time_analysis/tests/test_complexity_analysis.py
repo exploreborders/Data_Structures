@@ -1,6 +1,6 @@
 import unittest
 import time
-from chapter_5_running_time_analysis.code.complexity_analysis import (
+from chapter_05_running_time_analysis.code.complexity_analysis import (
     time_function,
     sum_first_k_quadratic,
     sum_first_k_linear,

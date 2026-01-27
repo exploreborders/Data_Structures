@@ -9,7 +9,7 @@ import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 
-from chapter_6_stacks_and_queues.code.stack_queue_adts import *
+from chapter_06_stacks_and_queues.code.stack_queue_adts import *
 
 
 def basic_adt_operations():

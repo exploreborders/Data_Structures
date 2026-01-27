@@ -9,7 +9,7 @@ import os
 
 sys.path.insert(0, os.path.join(os.pathdirname(__file__), "..", ".."))
 
-from chapter_8_doubly_linked_lists.code.concatenation_impl import *
+from chapter_08_doubly_linked_lists.code.concatenation_impl import *
 
 
 def basic_concatenation_demo():

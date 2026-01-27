@@ -9,7 +9,7 @@ import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 
-from chapter_7_deques_linked_lists.code.deque_linkedlist_impl import *
+from chapter_07_deques_linked_lists.code.deque_linkedlist_impl import *
 
 
 def basic_linked_list_demo():
@@ -103,7 +103,7 @@ def queue_implementations_comparison():
     """Compare different Queue implementations."""
     print("=== Queue Implementation Comparison ===\n")
 
-    from chapter_6_stacks_and_queues.code.stack_queue_adts import Queue as ListQueue
+    from chapter_06_stacks_and_queues.code.stack_queue_adts import Queue as ListQueue
 
     # Test data
     items = list(range(10))

@@ -1,5 +1,5 @@
 import pytest
-from chapter_1_overview.code.example import greet, add_numbers
+from chapter_01_overview.code.example import greet, add_numbers
 
 
 def test_greet():

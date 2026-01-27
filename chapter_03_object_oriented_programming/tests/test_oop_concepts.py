@@ -1,5 +1,5 @@
 import pytest
-from chapter_3_object_oriented_programming.code.oop_concepts import (
+from chapter_03_object_oriented_programming.code.oop_concepts import (
     Vector,
     Diary,
     Polygon,

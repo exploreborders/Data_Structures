@@ -1,5 +1,5 @@
 import unittest
-from chapter_8_doubly_linked_lists.code.concatenation_impl import (
+from chapter_08_doubly_linked_lists.code.concatenation_impl import (
     DoublyNode,
     DoublyLinkedList,
     demonstrate_concatenation_performance,

@@ -181,8 +181,10 @@ def demonstrate_recursion_depth():
     for n in [10, 50, 100, 500, 1000]:
         try:
             result, exec_time = time_function(factorial_recursive, n)
-            print("3d"        except RecursionError:
-            print("3d"            break
+            print(f"  n={n}: {result} (time: {exec_time:.6f}s)")
+        except RecursionError:
+            print(f"  n={n}: RecursionError")
+            break
 
 
 def demonstrate_memoization():
@@ -194,7 +196,8 @@ def demonstrate_memoization():
     print("Fibonacci(35) without memoization:")
     try:
         result, exec_time = time_function(fibonacci_recursive, 35)
-        print(".4f"    except RecursionError:
+        print(f"  Result: {result} (time: {exec_time:.6f}s)")
+    except RecursionError:
         print("  RecursionError (too slow/deep)")
 
     # With memoization
@@ -211,7 +214,7 @@ def demonstrate_memoization():
         return result
 
     result, exec_time = time_function(fib_memo, 35)
-    print(".4f"
+    print(f"  Result: {result} (time: {exec_time:.6f}s)")
 def main():
     """Run all demonstrations."""
     print("Chapter 9: Recursion - Implementation Comparison")
@@ -234,5 +237,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()</content>
-<parameter name="filePath">chapter_9_recursion/examples/recursion_vs_iteration.py
+    main()

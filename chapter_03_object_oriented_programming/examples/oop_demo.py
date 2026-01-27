@@ -9,7 +9,7 @@ import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 
-from chapter_3_object_oriented_programming.code.oop_concepts import *
+from chapter_03_object_oriented_programming.code.oop_concepts import *
 
 print("=== Chapter 3: Object-Oriented Programming Examples ===\n")
 

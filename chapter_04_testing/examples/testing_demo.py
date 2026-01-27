@@ -9,7 +9,7 @@ import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 
-from chapter_4_testing.code.testing_concepts import *
+from chapter_04_testing.code.testing_concepts import *
 
 print("=== Chapter 4: Testing Examples ===\n")
 

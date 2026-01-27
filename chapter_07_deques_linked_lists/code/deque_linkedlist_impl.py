@@ -492,7 +492,7 @@ if __name__ == "__main__":
 
     # Queue implementations comparison
     print("Queue Implementation Comparison:")
-    from chapter_6_stacks_and_queues.code.stack_queue_adts import Queue as ListQueue
+    from chapter_06_stacks_and_queues.code.stack_queue_adts import Queue as ListQueue
 
     # Test with 1000 items
     items = list(range(1000))

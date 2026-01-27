@@ -1,5 +1,5 @@
 import unittest
-from chapter_6_stacks_and_queues.code.stack_queue_adts import (
+from chapter_06_stacks_and_queues.code.stack_queue_adts import (
     Stack,
     Queue,
     EfficientQueue,

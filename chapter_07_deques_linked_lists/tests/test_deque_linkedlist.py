@@ -1,5 +1,5 @@
 import unittest
-from chapter_7_deques_linked_lists.code.deque_linkedlist_impl import (
+from chapter_07_deques_linked_lists.code.deque_linkedlist_impl import (
     Node,
     DoublyNode,
     LinkedList,
@@ -550,7 +550,7 @@ class TestPerformanceComparisons(unittest.TestCase):
 
     def test_linked_vs_list_queue_performance(self):
         """Compare LinkedQueue vs list-based Queue performance."""
-        from chapter_6_stacks_and_queues.code.stack_queue_adts import Queue as ListQueue
+        from chapter_06_stacks_and_queues.code.stack_queue_adts import Queue as ListQueue
 
         # Test with moderate size (too large and list-queue is very slow)
         size = 1000

@@ -9,7 +9,7 @@ import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 
-from chapter_5_running_time_analysis.code.complexity_analysis import *
+from chapter_05_running_time_analysis.code.complexity_analysis import *
 
 
 def timing_comparison_demo():

@@ -9,7 +9,7 @@ import sys
 import os
 
 # Add the code directory from chapter 7 to the path
-chapter7_code = os.path.join(os.path.dirname(__file__), '..', '..', 'chapter_7_deques_and_linked_lists', 'code')
+chapter7_code = os.path.join(os.path.dirname(__file__), '..', '..', 'chapter_07_deques_and_linked_lists', 'code')
 if chapter7_code not in sys.path:
     sys.path.insert(0, chapter7_code)
 
@@ -324,4 +324,4 @@ def demonstrate_linked_list_recursion():
 
 if __name__ == '__main__':
     demonstrate_linked_list_recursion()</content>
-<parameter name="filePath">chapter_9_recursion/code/linked_list_recursion.py
+<parameter name="filePath">chapter_09_recursion/code/linked_list_recursion.py

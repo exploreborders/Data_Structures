@@ -129,4 +129,4 @@ Recursion represents a fundamental shift in thinking about problem-solving:
 - Trust that the simpler cases will eventually reach the base case
 
 This elegant approach often leads to more maintainable and understandable code when used appropriately.</content>
-<parameter name="filePath">chapter_9_recursion/README.md
+<parameter name="filePath">chapter_09_recursion/README.md

@@ -68,4 +68,4 @@ def fib(n):
 - Try converting iterative functions to recursive and vice versa
 - Solve problems like Tower of Hanoi, N-Queens using recursion
 - Think about which data structures lend themselves to recursion (trees, graphs, lists)</content>
-<parameter name="filePath">chapter_9_recursion/notes.md
+<parameter name="filePath">chapter_09_recursion/notes.md
