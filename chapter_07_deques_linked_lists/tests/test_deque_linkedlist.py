@@ -1,4 +1,9 @@
 import unittest
+import sys
+import os
+
+# Add root directory to path so imports work
+sys.path.insert(0, os.path.join(os.getcwd(), "..", ".."))
 from chapter_07_deques_linked_lists.code.deque_linkedlist_impl import (
     Node,
     DoublyNode,

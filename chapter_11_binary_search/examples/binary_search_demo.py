@@ -175,7 +175,7 @@ def performance_comparison():
         # Calculate speedup
         speedup = linear_time / binary_time if binary_time > 0 else float("inf")
 
-        print("6d")
+        print(f"{size:6d} | {linear_time:8.6f}s | {binary_time:8.6f}s | {speedup:.1f}x")
 
     print(
         "\nNote: Binary search requires sorted data. The 'sort once, search many times'"
@@ -207,7 +207,7 @@ def demonstrate_advanced_search():
         results = []
         for name, algo in algorithms:
             _, exec_time = time_function(algo, arr, target)
-            results.append("6.4f")
+            results.append(f"{exec_time:6.4f}")
 
         print(f"{target:6d} | {' | '.join(results)}")
 

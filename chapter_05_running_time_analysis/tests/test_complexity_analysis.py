@@ -1,5 +1,10 @@
 import unittest
-import time
+import sys
+import os
+
+# Add root directory to path so imports work
+sys.path.insert(0, os.path.join(os.getcwd(), "..", ".."))
+
 from chapter_05_running_time_analysis.code.complexity_analysis import (
     time_function,
     sum_first_k_quadratic,

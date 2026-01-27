@@ -4,6 +4,11 @@ Chapter 7: Deques and Linked Lists - Dynamic Data Structures
 This module implements Linked Lists, the Deque ADT, and demonstrates
 the Wrapper Pattern by implementing Queue using LinkedList.
 """
+import sys
+import os
+
+# Add root directory to path so imports work
+sys.path.insert(0, os.path.join(os.getcwd(), "..", ".."))
 
 
 class Node:

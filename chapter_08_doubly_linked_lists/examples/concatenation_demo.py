@@ -3,11 +3,11 @@
 Examples demonstrating Chapter 8 Doubly Linked List concatenation.
 Run this script to see efficient O(1) list merging operations.
 """
-
 import sys
 import os
 
-sys.path.insert(0, os.path.join(os.pathdirname(__file__), "..", ".."))
+# Add root directory to path so imports work
+sys.path.insert(0, os.path.join(os.getcwd(), "..", ".."))
 
 from chapter_08_doubly_linked_lists.code.concatenation_impl import *
 

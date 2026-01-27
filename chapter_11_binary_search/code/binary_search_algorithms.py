@@ -45,8 +45,9 @@ class BinarySearch:
         return -1
 
     @staticmethod
-    def binary_search_recursive(arr: List[int], target: int,
-                               left: int = 0, right: Optional[int] = None) -> int:
+    def binary_search_recursive(
+        arr: List[int], target: int, left: int = 0, right: Optional[int] = None
+    ) -> int:
         """
         Standard recursive binary search.
 
@@ -337,10 +338,10 @@ class BinarySearchApplications:
                 if arr[left] <= target < arr[mid]:
                     right = mid - 1  # Search left half
                 else:
-                    left = mid + 1   # Search right half
+                    left = mid + 1  # Search right half
             else:  # Right half is sorted
                 if arr[mid] < target <= arr[right]:
-                    left = mid + 1   # Search right half
+                    left = mid + 1  # Search right half
                 else:
                     right = mid - 1  # Search left half
 
@@ -375,7 +376,7 @@ class BinarySearchApplications:
             if arr[mid] > arr[right]:
                 left = mid + 1  # Minimum is in right half
             else:
-                right = mid     # Minimum is in left half (including mid)
+                right = mid  # Minimum is in left half (including mid)
 
         return arr[left]
 
@@ -412,11 +413,12 @@ class AdvancedSearch:
         while i < len(arr) and arr[i] <= target:
             i *= 2
 
-        # Binary search in the found range
+        # Binary search in found range
         left = i // 2
         right = min(i, len(arr) - 1)
 
-        return BinarySearch.binary_search_iterative(arr[left:right+1], target) + left
+        result = BinarySearch.binary_search_iterative(arr[left : right + 1], target)
+        return result + left if result != -1 else -1
 
     @staticmethod
     def interpolation_search(arr: List[int], target: int) -> int:
@@ -445,8 +447,9 @@ class AdvancedSearch:
                 return -1
 
             # Interpolation formula
-            pos = left + ((right - left) * (target - arr[left]) //
-                         (arr[right] - arr[left]))
+            pos = left + (
+                (right - left) * (target - arr[left]) // (arr[right] - arr[left])
+            )
 
             if arr[pos] == target:
                 return pos

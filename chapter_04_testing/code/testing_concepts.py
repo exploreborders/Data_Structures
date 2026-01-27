@@ -8,9 +8,6 @@ This module demonstrates testing concepts including:
 - Testing object-oriented code
 """
 
-import unittest
-
-
 # 4.1 Writing Tests - Basic assertions
 def demonstrate_assertions():
     """

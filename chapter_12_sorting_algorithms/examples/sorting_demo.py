@@ -13,7 +13,7 @@ import os
 from typing import List, Dict, Any
 
 # Add the code directory to the path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'code'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "code"))
 
 from sorting_algorithms import SortingAlgorithms, SortingAnalysis
 
@@ -23,8 +23,8 @@ def print_array(arr: List, max_elements: int = 20) -> None:
     if len(arr) <= max_elements:
         print(f"[{', '.join(map(str, arr))}]")
     else:
-        front = arr[:max_elements//2]
-        back = arr[-(max_elements//2):]
+        front = arr[: max_elements // 2]
+        back = arr[-(max_elements // 2) :]
         print(f"[{', '.join(map(str, front))}, ..., {', '.join(map(str, back))}]")
 
 
@@ -39,16 +39,28 @@ def demonstrate_basic_sorts():
     print()
 
     algorithms = [
-        ("Bubble Sort", SortingAlgorithms.bubble_sort, "O(n²) - Simple but inefficient"),
-        ("Insertion Sort", SortingAlgorithms.insertion_sort, "O(n²) - Good for small/nearly sorted arrays"),
-        ("Selection Sort", SortingAlgorithms.selection_sort, "O(n²) - Predictable but slow"),
+        (
+            "Bubble Sort",
+            SortingAlgorithms.bubble_sort,
+            "O(n²) - Simple but inefficient",
+        ),
+        (
+            "Insertion Sort",
+            SortingAlgorithms.insertion_sort,
+            "O(n²) - Good for small/nearly sorted arrays",
+        ),
+        (
+            "Selection Sort",
+            SortingAlgorithms.selection_sort,
+            "O(n²) - Predictable but slow",
+        ),
     ]
 
     for name, sort_func, description in algorithms:
         print(f"{name}: {description}")
         arr_copy = original.copy()
         result, exec_time = SortingAnalysis.time_sorting_algorithm(sort_func, arr_copy)
-        print("6.2f")
+        print(f"  Time: {exec_time:6.6f}s")
         print(f"  Result: {result}")
         print()
 
@@ -63,16 +75,28 @@ def demonstrate_efficient_sorts():
     print()
 
     algorithms = [
-        ("Quick Sort", SortingAlgorithms.quick_sort, "O(n log n) average - Fast and in-place"),
-        ("Merge Sort", SortingAlgorithms.merge_sort, "O(n log n) worst case - Stable and predictable"),
-        ("Heap Sort", SortingAlgorithms.heap_sort, "O(n log n) worst case - In-place, no extra space"),
+        (
+            "Quick Sort",
+            SortingAlgorithms.quick_sort,
+            "O(n log n) average - Fast and in-place",
+        ),
+        (
+            "Merge Sort",
+            SortingAlgorithms.merge_sort,
+            "O(n log n) worst case - Stable and predictable",
+        ),
+        (
+            "Heap Sort",
+            SortingAlgorithms.heap_sort,
+            "O(n log n) worst case - In-place, no extra space",
+        ),
     ]
 
     for name, sort_func, description in algorithms:
         print(f"{name}: {description}")
         arr_copy = original.copy()
         result, exec_time = SortingAnalysis.time_sorting_algorithm(sort_func, arr_copy)
-        print("6.2f")
+        print(f"  Time: {exec_time:6.6f}s")
         print(f"  Result: {result}")
         print()
 
@@ -138,7 +162,9 @@ def performance_comparison():
 
         for name, sort_func in algorithms:
             try:
-                result, exec_time = SortingAnalysis.time_sorting_algorithm(sort_func, arr.copy())
+                result, exec_time = SortingAnalysis.time_sorting_algorithm(
+                    sort_func, arr.copy()
+                )
 
                 # Check if result is sorted
                 if SortingAnalysis.is_sorted(result):
@@ -146,16 +172,20 @@ def performance_comparison():
                 else:
                     status = "✗ FAILED"
 
-                print("9d")
+                print(f"{size:9d} | {name:15s} | {exec_time:12.6f} | {status}")
 
                 # For large arrays, skip slow algorithms after first failure
-                if size >= 1000 and exec_time > 1.0 and name in ["Bubble Sort", "Selection Sort"]:
+                if (
+                    size >= 1000
+                    and exec_time > 1.0
+                    and name in ["Bubble Sort", "Selection Sort"]
+                ):
                     break
 
             except RecursionError:
-                print("9d")
+                print(f"{size:9d} | {name:15s} | {'RECURSION ERROR':>12s} | ✗ FAILED")
             except Exception as e:
-                print("9d")
+                print(f"{size:9d} | {name:15s} | {'ERROR':>12s} | ✗ FAILED")
 
         print()
 
@@ -186,7 +216,9 @@ def analyze_algorithm_characteristics():
 
     for arr_name, arr in test_arrays.items():
         for name, sort_func, adaptive in algorithms:
-            result, exec_time = SortingAnalysis.time_sorting_algorithm(sort_func, arr.copy())
+            result, exec_time = SortingAnalysis.time_sorting_algorithm(
+                sort_func, arr.copy()
+            )
             time_ms = exec_time * 1000
 
             # Determine if this shows best-case behavior for adaptive sorts
@@ -196,7 +228,7 @@ def analyze_algorithm_characteristics():
             elif arr_name == "Reverse" and name == "Selection Sort":
                 best_case = "★ Same performance"
 
-            print("15")
+            print(f"{name:15s} | {arr_name:14s} | {time_ms:8.2f} | {best_case}")
 
         print()
 
@@ -215,6 +247,15 @@ def demonstrate_sorting_stability():
         def __lt__(self, other):
             return self.grade < other.grade
 
+        def __le__(self, other):
+            return self.grade <= other.grade
+
+        def __gt__(self, other):
+            return self.grade > other.grade
+
+        def __ge__(self, other):
+            return self.grade >= other.grade
+
         def __repr__(self):
             return f"{self.name}(G{self.grade}, #{self.original_pos})"
 
@@ -224,7 +265,7 @@ def demonstrate_sorting_stability():
         Student("Bob", 92, 2),
         Student("Charlie", 85, 3),  # Same grade as Alice
         Student("David", 78, 4),
-        Student("Eve", 85, 5),      # Same grade as Alice and Charlie
+        Student("Eve", 85, 5),  # Same grade as Alice and Charlie
     ]
 
     print("Original students (note positions):")
@@ -273,7 +314,7 @@ def interactive_sort_explorer():
 
         choice = input("\nChoose an algorithm (number or 'quit'): ").strip()
 
-        if choice.lower() == 'quit':
+        if choice.lower() == "quit":
             break
 
         if choice not in algorithms:
@@ -284,14 +325,16 @@ def interactive_sort_explorer():
 
         # Get array input
         while True:
-            arr_input = input("Enter comma-separated numbers (or 'random' for random array): ").strip()
+            arr_input = input(
+                "Enter comma-separated numbers (or 'random' for random array): "
+            ).strip()
 
-            if arr_input.lower() == 'random':
+            if arr_input.lower() == "random":
                 arr = SortingAnalysis.generate_test_data(10, "random")
                 break
             else:
                 try:
-                    arr = [int(x.strip()) for x in arr_input.split(',')]
+                    arr = [int(x.strip()) for x in arr_input.split(",")]
                     break
                 except ValueError:
                     print("Invalid input. Please enter numbers separated by commas.")
@@ -326,7 +369,9 @@ def interactive_sort_explorer():
 def main():
     """Run all demonstrations."""
     print("Chapter 12: Sorting Algorithms - Interactive Examples")
-    print("This script demonstrates sorting concepts, performance, and characteristics.\n")
+    print(
+        "This script demonstrates sorting concepts, performance, and characteristics.\n"
+    )
 
     demonstrate_basic_sorts()
     demonstrate_efficient_sorts()
@@ -336,8 +381,12 @@ def main():
     demonstrate_sorting_stability()
 
     # Interactive demo
-    response = input("\nWould you like to explore sorting algorithms interactively? (y/n): ").strip().lower()
-    if response == 'y' or response == 'yes':
+    response = (
+        input("\nWould you like to explore sorting algorithms interactively? (y/n): ")
+        .strip()
+        .lower()
+    )
+    if response == "y" or response == "yes":
         interactive_sort_explorer()
 
     print("\n" + "=" * 60)
@@ -352,6 +401,5 @@ def main():
     print("\nMastering sorting algorithms is fundamental to efficient programming!")
 
 
-if __name__ == '__main__':
-    main()</content>
-<parameter name="filePath">chapter_12_sorting_algorithms/examples/sorting_demo.py
+if __name__ == "__main__":
+    main()

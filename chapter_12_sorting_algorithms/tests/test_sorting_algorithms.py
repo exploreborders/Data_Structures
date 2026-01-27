@@ -250,5 +250,4 @@ class TestSortingAlgorithms(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()</content>
-<parameter name="filePath">chapter_12_sorting_algorithms/tests/test_sorting_algorithms.py
+    unittest.main()

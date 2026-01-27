@@ -10,7 +10,7 @@ import heapq
 import random
 import time
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class SortingAlgorithms:
@@ -130,6 +130,7 @@ class SortingAlgorithms:
             >>> SortingAlgorithms.quick_sort([3, 1, 4, 1, 5])
             [1, 1, 3, 4, 5]
         """
+
         def _quick_sort_helper(low: int, high: int) -> None:
             if low < high:
                 # Partition and get pivot index
@@ -175,7 +176,7 @@ class SortingAlgorithms:
             [1, 1, 3, 4, 5]
         """
         if len(arr) <= 1:
-            return arr
+            return arr.copy()
 
         # Split array into two halves
         mid = len(arr) // 2
@@ -350,7 +351,7 @@ class SortingAlgorithms:
 
         # Count occurrences of each digit
         for num in arr:
-            digit_value = (num // (10 ** digit)) % 10
+            digit_value = (num // (10**digit)) % 10
             count[digit_value] += 1
 
         # Compute cumulative count
@@ -359,7 +360,7 @@ class SortingAlgorithms:
 
         # Build output array
         for i in range(n - 1, -1, -1):  # Stable sort
-            digit_value = (arr[i] // (10 ** digit)) % 10
+            digit_value = (arr[i] // (10**digit)) % 10
             output[count[digit_value] - 1] = arr[i]
             count[digit_value] -= 1
 
@@ -439,8 +440,8 @@ class SortingAlgorithms:
 
         def merge_sublists(start: int, mid: int, end: int) -> None:
             """Merge two sorted sublists."""
-            left = arr[start:mid + 1]
-            right = arr[mid + 1:end + 1]
+            left = arr[start : mid + 1]
+            right = arr[mid + 1 : end + 1]
 
             i = j = 0
             k = start
@@ -490,7 +491,9 @@ class SortingAnalysis:
     """Tools for analyzing sorting algorithm performance."""
 
     @staticmethod
-    def time_sorting_algorithm(sort_func: Callable, arr: List[T], *args, **kwargs) -> tuple:
+    def time_sorting_algorithm(
+        sort_func: Callable, arr: List[T], *args, **kwargs
+    ) -> tuple:
         """
         Time a sorting algorithm execution.
 
@@ -520,8 +523,9 @@ class SortingAnalysis:
         return True
 
     @staticmethod
-    def is_stable_sort(original: List[T], sorted_arr: List[T],
-                      key_func: Callable = None) -> bool:
+    def is_stable_sort(
+        original: List[T], sorted_arr: List[T], key_func: Callable = None
+    ) -> bool:
         """
         Check if sort is stable (preserves relative order of equal elements).
 
@@ -550,7 +554,7 @@ class SortingAnalysis:
         elif distribution == "sorted":
             return list(range(size))
         elif distribution == "reverse":
-            return list(range(size, 0, -1))
+            return list(range(size - 1, -1, -1))
         elif distribution == "nearly_sorted":
             arr = list(range(size))
             # Swap a few elements
