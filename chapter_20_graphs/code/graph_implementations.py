@@ -83,6 +83,13 @@ class Graph(Generic[T]):
                     if neighbor != vertex
                 ]
 
+    def remove_edge(self, u: T, v: T) -> None:
+        """Remove edge between u and v."""
+        if u in self.adj_list:
+            self.adj_list[u] = [(x, w) for x, w in self.adj_list[u] if x != v]
+        if not self.directed and v in self.adj_list:
+            self.adj_list[v] = [(x, w) for x, w in self.adj_list[v] if x != u]
+
     def has_edge(self, u: T, v: T) -> bool:
         """Check if edge exists between u and v."""
         if u not in self.adj_list:
@@ -157,12 +164,181 @@ class GraphAnalysis:
             else 0,
         }
 
+    @staticmethod
+    def connected_components(graph: Graph[T]) -> List[List[T]]:
+        """Find connected components using DFS."""
+        visited = set()
+        components = []
+
+        for vertex in graph.vertices:
+            if vertex not in visited:
+                component = GraphTraversal.dfs(graph, vertex)
+                components.append(component)
+                visited.update(component)
+
+        return components
+
+    @staticmethod
+    def has_cycle(graph: Graph[T]) -> bool:
+        """Detect if graph has cycle using DFS."""
+        visited = set()
+
+        def has_cycle_visit(vertex: T, parent: Optional[T] = None) -> bool:
+            visited.add(vertex)
+
+            for neighbor_info in graph.get_neighbors(vertex):
+                neighbor = neighbor_info[0]
+                if neighbor != parent:
+                    if neighbor in visited:
+                        return True
+                    elif has_cycle_visit(neighbor, vertex):
+                        return True
+            return False
+
+        for vertex in graph.vertices:
+            if vertex not in visited:
+                if has_cycle_visit(vertex):
+                    return True
+
+        return False
+
+    @staticmethod
+    def topological_sort(graph: Graph[T]) -> List[T]:
+        """Perform topological sort using Kahn's algorithm."""
+        in_degree = {vertex: 0 for vertex in graph.vertices}
+
+        # Calculate in-degrees
+        for u in graph.vertices:
+            for neighbor_info in graph.get_neighbors(u):
+                v = neighbor_info[0]
+                in_degree[v] += 1
+
+        # Queue of vertices with no incoming edges
+        queue = collections.deque(
+            [vertex for vertex in graph.vertices if in_degree[vertex] == 0]
+        )
+        result = []
+
+        while queue:
+            u = queue.popleft()
+            result.append(u)
+
+            # Remove u's outgoing edges
+            for neighbor_info in graph.get_neighbors(u):
+                v = neighbor_info[0]
+                in_degree[v] -= 1
+                if in_degree[v] == 0:
+                    queue.append(v)
+
+        # Check for cycle
+        if len(result) != len(graph.vertices):
+            return []  # Cycle detected
+
+        return result
+
+    @staticmethod
+    def minimum_spanning_tree(graph: Graph[T]) -> List[Tuple[T, T, float]]:
+        """Kruskal's algorithm for minimum spanning tree."""
+        # Sort edges by weight
+        edges = []
+        for u in graph.vertices:
+            for v, weight in graph.get_neighbors(u):
+                if u < v:  # Avoid duplicates
+                    edges.append((weight, u, v))
+
+        edges.sort()
+
+        # Union-Find structure
+        parent = {vertex: vertex for vertex in graph.vertices}
+
+        def find(x):
+            while parent[x] != x:
+                parent[x] = parent[parent[x]]
+                x = parent[x]
+            return x
+
+        def union(x, y):
+            px, py = find(x), find(y)
+            if px != py:
+                parent[px] = py
+
+        mst = []
+        for weight, u, v in edges:
+            if find(u) != find(v):
+                union(u, v)
+                mst.append((u, v, weight))
+
+        return mst
+
+    @staticmethod
+    def dfs_iterative(graph: Graph[T], start: T) -> List[T]:
+        """Iterative DFS implementation."""
+        visited = set()
+        stack = [start]
+        result = []
+
+        while stack:
+            current = stack.pop()
+            if current not in visited:
+                visited.add(current)
+                result.append(current)
+
+                # Add neighbors to stack
+                for neighbor_info in graph.get_neighbors(current):
+                    neighbor = neighbor_info[0]
+                    if neighbor not in visited:
+                        stack.append(neighbor)
+
+        return result
+
+    @staticmethod
+    def floyd_warshall(graph: Graph[T]) -> Dict[Tuple[T, T], float]:
+        """Floyd-Warshall all-pairs shortest paths algorithm."""
+        import sys
+
+        # Initialize distance matrix
+        vertices = list(graph.vertices)
+        n = len(vertices)
+        INF = float("inf")
+        dist = [[INF] * n for _ in range(n)]
+
+        # Set distances from adjacency list
+        for i, u in enumerate(vertices):
+            for j, v in enumerate(vertices):
+                if graph.has_edge(u, v):
+                    dist[i][j] = graph.get_edge_weight(u, v)
+                elif i == j:
+                    dist[i][j] = 0
+
+        # Floyd-Warshall main algorithm
+        for k in range(n):
+            for i in range(n):
+                for j in range(n):
+                    if dist[i][k] + dist[k][j] < dist[i][j]:
+                        dist[i][j] = dist[i][k] + dist[k][j]
+
+        # Convert back to tuple keys
+        result = {}
+        for i, u in enumerate(vertices):
+            for j, v in enumerate(vertices):
+                if dist[i][j] != INF:
+                    result[(u, v)] = dist[i][j]
+
+        return result
+
+    @staticmethod
+    def is_dag(graph: Graph[T]) -> bool:
+        """Check if graph is a DAG (no cycles)."""
+        return not GraphAnalysis.has_cycle(graph)
+
 
 class GraphTraversal:
     """Graph traversal algorithms: DFS and BFS."""
 
     @staticmethod
-    def dfs(graph: Graph[T], start: T, visitor: Optional[Callable[[T], None]] = None) -> List[T]:
+    def dfs(
+        graph: Graph[T], start: T, visitor: Optional[Callable[[T], None]] = None
+    ) -> List[T]:
         visited = set()
         result = []
 
@@ -173,7 +349,10 @@ class GraphTraversal:
             result.append(vertex)
 
             # Corrected: iterate over neighbors of current vertex
-            for neighbor in graph.get_neighbors(vertex).keys():  # <-- use .keys() if dict
+            for neighbor_info in graph.get_neighbors(vertex):
+                neighbor = neighbor_info[
+                    0
+                ]  # Extract vertex from (vertex, weight) tuple
                 if neighbor not in visited:
                     dfs_visit(neighbor)
 
@@ -181,7 +360,74 @@ class GraphTraversal:
         return result
 
     @staticmethod
-    def bfs(graph: Graph[T], start: T, visitor: Optional[Callable[[T], None]] = None) -> List[T]:
+    def dfs_paths(graph: Graph[T], start: T, end: T) -> List[List[T]]:
+        """Find all paths from start to end using DFS."""
+
+        def dfs_paths_visit(
+            current: T, end: T, visited: set, path: List[T], all_paths: List[List[T]]
+        ) -> None:
+            path.append(current)
+
+            if current == end:
+                all_paths.append(path.copy())
+                path.pop()
+                return
+
+            visited.add(current)
+
+            for neighbor_info in graph.get_neighbors(current):
+                neighbor = neighbor_info[0]
+                if neighbor not in visited:
+                    dfs_paths_visit(neighbor, end, visited, path, all_paths)
+
+            visited.remove(current)
+            path.pop()
+
+        all_paths = []
+        dfs_paths_visit(start, end, set(), [], all_paths)
+        return all_paths
+
+    @staticmethod
+    def bfs_shortest_path(graph: Graph[T], start: T, end: T) -> List[T]:
+        """Find shortest path using BFS."""
+
+        def bfs_shortest_path_visit() -> List[T]:
+            visited = set()
+            queue = collections.deque()
+            parent = {}
+
+            visited.add(start)
+            queue.append(start)
+            parent[start] = None
+
+            while queue:
+                current = queue.popleft()
+
+                if current == end:
+                    # Reconstruct path
+                    path = []
+                    while current is not None:
+                        path.append(current)
+                        current = parent[current]
+                    path.reverse()
+                    return path
+
+                for neighbor_info in graph.get_neighbors(current):
+                    neighbor = neighbor_info[0]
+                    if neighbor not in visited:
+                        visited.add(neighbor)
+                        queue.append(neighbor)
+                        parent[neighbor] = current
+
+            # End not found - return empty list
+            return []
+
+        return bfs_shortest_path_visit()
+
+    @staticmethod
+    def bfs(
+        graph: Graph[T], start: T, visitor: Optional[Callable[[T], None]] = None
+    ) -> List[T]:
         visited = set()
         result = []
         queue = collections.deque()
@@ -196,7 +442,10 @@ class GraphTraversal:
             result.append(vertex)
 
             # Corrected: iterate over neighbors of current vertex
-            for neighbor in graph.get_neighbors(vertex).keys():  # <-- use .keys() if dict
+            for neighbor_info in graph.get_neighbors(vertex):
+                neighbor = neighbor_info[
+                    0
+                ]  # Extract vertex from (vertex, weight) tuple
                 if neighbor not in visited:
                     visited.add(neighbor)
                     queue.append(neighbor)
@@ -266,6 +515,8 @@ class ShortestPaths:
         """
         if end not in predecessors or predecessors[end] is None and end != start:
             return []
+        elif end == start:
+            return [start]  # Handle case where start equals end
 
         path = []
         current = end
@@ -275,3 +526,45 @@ class ShortestPaths:
 
         path.reverse()
         return path
+
+    @staticmethod
+    def bellman_ford(
+        graph: Graph[T], start: T
+    ) -> Tuple[Dict[T, float], Dict[T, Optional[T]]]:
+        """
+        Bellman-Ford algorithm for shortest paths with negative weights.
+
+        Args:
+            graph: Weighted graph (can have negative edges)
+            start: Starting vertex
+
+        Returns:
+            Tuple of (distances, predecessors)
+        """
+        import sys
+
+        # Initialize distances and predecessors
+        distances: Dict[T, float] = {vertex: float("inf") for vertex in graph.vertices}
+        predecessors: Dict[T, Optional[T]] = {vertex: None for vertex in graph.vertices}
+        distances[start] = 0
+
+        # Relax edges |V| - 1 times
+        for i in range(len(graph.vertices) - 1):
+            updated = False
+
+            # Check all edges
+            for u in graph.vertices:
+                for neighbor_info in graph.get_neighbors(u):
+                    v = neighbor_info[0]
+                    weight = neighbor_info[1]
+
+                    if distances[u] + weight < distances[v]:
+                        distances[v] = distances[u] + weight
+                        predecessors[v] = u
+                        updated = True
+
+            # Early termination if no updates in this iteration
+            if not updated:
+                break
+
+        return distances, predecessors

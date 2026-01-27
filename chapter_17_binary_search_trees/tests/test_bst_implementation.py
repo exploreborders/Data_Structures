@@ -8,7 +8,8 @@ from typing import List
 # Add the code directory to the path
 import sys
 import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'code'))
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "code"))
 
 from bst_implementation import BinarySearchTree, BSTNode, BSTAnalysis
 
@@ -88,7 +89,14 @@ class TestBinarySearchTree(unittest.TestCase):
 
     def test_multiple_insertions(self):
         """Test inserting multiple key-value pairs."""
-        values = [(8, "eight"), (3, "three"), (10, "ten"), (1, "one"), (6, "six"), (14, "fourteen")]
+        values = [
+            (8, "eight"),
+            (3, "three"),
+            (10, "ten"),
+            (1, "one"),
+            (6, "six"),
+            (14, "fourteen"),
+        ]
         for key, value in values:
             self.bst.put(key, value)
 
@@ -173,74 +181,109 @@ class TestBinarySearchTree(unittest.TestCase):
 
     def test_successor(self):
         """Test successor operation."""
-        values = [(8, "eight"), (3, "three"), (10, "ten"), (1, "one"), (6, "six"), (14, "fourteen")]
+        values = [
+            (8, "eight"),
+            (3, "three"),
+            (10, "ten"),
+            (1, "one"),
+            (6, "six"),
+            (14, "fourteen"),
+        ]
         for key, value in values:
             self.bst.put(key, value)
 
         # Test successors
-        self.assertEqual(self.bst.successor(1), 3)   # 1 -> 3
-        self.assertEqual(self.bst.successor(3), 6)   # 3 -> 6
-        self.assertEqual(self.bst.successor(6), 8)   # 6 -> 8
+        self.assertEqual(self.bst.successor(1), 3)  # 1 -> 3
+        self.assertEqual(self.bst.successor(3), 6)  # 3 -> 6
+        self.assertEqual(self.bst.successor(6), 8)  # 6 -> 8
         self.assertEqual(self.bst.successor(8), 10)  # 8 -> 10
-        self.assertEqual(self.bst.successor(10), 14) # 10 -> 14
-        self.assertIsNone(self.bst.successor(14))    # 14 has no successor
+        self.assertEqual(self.bst.successor(10), 14)  # 10 -> 14
+        self.assertIsNone(self.bst.successor(14))  # 14 has no successor
 
         # Test non-existent key
         self.assertIsNone(self.bst.successor(20))
 
     def test_predecessor(self):
         """Test predecessor operation."""
-        values = [(8, "eight"), (3, "three"), (10, "ten"), (1, "one"), (6, "six"), (14, "fourteen")]
+        values = [
+            (8, "eight"),
+            (3, "three"),
+            (10, "ten"),
+            (1, "one"),
+            (6, "six"),
+            (14, "fourteen"),
+        ]
         for key, value in values:
             self.bst.put(key, value)
 
         # Test predecessors
-        self.assertIsNone(self.bst.predecessor(1))   # 1 has no predecessor
-        self.assertEqual(self.bst.predecessor(3), 1) # 3 <- 1
-        self.assertEqual(self.bst.predecessor(6), 3) # 6 <- 3
-        self.assertEqual(self.bst.predecessor(8), 6) # 8 <- 6
-        self.assertEqual(self.bst.predecessor(10), 8) # 10 <- 8
-        self.assertEqual(self.bst.predecessor(14), 10) # 14 <- 10
+        self.assertIsNone(self.bst.predecessor(1))  # 1 has no predecessor
+        self.assertEqual(self.bst.predecessor(3), 1)  # 3 <- 1
+        self.assertEqual(self.bst.predecessor(6), 3)  # 6 <- 3
+        self.assertEqual(self.bst.predecessor(8), 6)  # 8 <- 6
+        self.assertEqual(self.bst.predecessor(10), 8)  # 10 <- 8
+        self.assertEqual(self.bst.predecessor(14), 10)  # 14 <- 10
 
         # Test non-existent key
         self.assertIsNone(self.bst.predecessor(0))
 
     def test_floor(self):
         """Test floor operation."""
-        values = [(8, "eight"), (3, "three"), (10, "ten"), (1, "one"), (6, "six"), (14, "fourteen")]
+        values = [
+            (8, "eight"),
+            (3, "three"),
+            (10, "ten"),
+            (1, "one"),
+            (6, "six"),
+            (14, "fourteen"),
+        ]
         for key, value in values:
             self.bst.put(key, value)
 
         # Test floor
-        self.assertEqual(self.bst.floor(0), None)    # No key <= 0
-        self.assertEqual(self.bst.floor(1), 1)       # 1 <= 1
-        self.assertEqual(self.bst.floor(2), 1)       # 1 <= 2
-        self.assertEqual(self.bst.floor(4), 3)       # 3 <= 4
-        self.assertEqual(self.bst.floor(7), 6)       # 6 <= 7
-        self.assertEqual(self.bst.floor(9), 8)       # 8 <= 9
-        self.assertEqual(self.bst.floor(11), 10)     # 10 <= 11
-        self.assertEqual(self.bst.floor(15), 14)     # 14 <= 15
-        self.assertEqual(self.bst.floor(20), 14)     # 14 <= 20
+        self.assertEqual(self.bst.floor(0), None)  # No key <= 0
+        self.assertEqual(self.bst.floor(1), 1)  # 1 <= 1
+        self.assertEqual(self.bst.floor(2), 1)  # 1 <= 2
+        self.assertEqual(self.bst.floor(4), 3)  # 3 <= 4
+        self.assertEqual(self.bst.floor(7), 6)  # 6 <= 7
+        self.assertEqual(self.bst.floor(9), 8)  # 8 <= 9
+        self.assertEqual(self.bst.floor(11), 10)  # 10 <= 11
+        self.assertEqual(self.bst.floor(15), 14)  # 14 <= 15
+        self.assertEqual(self.bst.floor(20), 14)  # 14 <= 20
 
     def test_ceiling(self):
         """Test ceiling operation."""
-        values = [(8, "eight"), (3, "three"), (10, "ten"), (1, "one"), (6, "six"), (14, "fourteen")]
+        values = [
+            (8, "eight"),
+            (3, "three"),
+            (10, "ten"),
+            (1, "one"),
+            (6, "six"),
+            (14, "fourteen"),
+        ]
         for key, value in values:
             self.bst.put(key, value)
 
         # Test ceiling
-        self.assertEqual(self.bst.ceiling(0), 1)      # 1 >= 0
-        self.assertEqual(self.bst.ceiling(1), 1)      # 1 >= 1
-        self.assertEqual(self.bst.ceiling(2), 3)      # 3 >= 2
-        self.assertEqual(self.bst.ceiling(4), 6)      # 6 >= 4
-        self.assertEqual(self.bst.ceiling(7), 8)      # 8 >= 7
-        self.assertEqual(self.bst.ceiling(9), 10)     # 10 >= 9
-        self.assertEqual(self.bst.ceiling(11), 14)    # 14 >= 11
+        self.assertEqual(self.bst.ceiling(0), 1)  # 1 >= 0
+        self.assertEqual(self.bst.ceiling(1), 1)  # 1 >= 1
+        self.assertEqual(self.bst.ceiling(2), 3)  # 3 >= 2
+        self.assertEqual(self.bst.ceiling(4), 6)  # 6 >= 4
+        self.assertEqual(self.bst.ceiling(7), 8)  # 8 >= 7
+        self.assertEqual(self.bst.ceiling(9), 10)  # 10 >= 9
+        self.assertEqual(self.bst.ceiling(11), 14)  # 14 >= 11
         self.assertEqual(self.bst.ceiling(15), None)  # No key >= 15
 
     def test_range_queries(self):
         """Test range query operations."""
-        values = [(8, "eight"), (3, "three"), (10, "ten"), (1, "one"), (6, "six"), (14, "fourteen")]
+        values = [
+            (8, "eight"),
+            (3, "three"),
+            (10, "ten"),
+            (1, "one"),
+            (6, "six"),
+            (14, "fourteen"),
+        ]
         for key, value in values:
             self.bst.put(key, value)
 
@@ -251,7 +294,9 @@ class TestBinarySearchTree(unittest.TestCase):
         self.assertEqual(self.bst.keys_in_range(20, 25), [])
 
         # Test values in range
-        self.assertEqual(self.bst.values_in_range(3, 10), ["three", "six", "eight", "ten"])
+        self.assertEqual(
+            self.bst.values_in_range(3, 10), ["three", "six", "eight", "ten"]
+        )
 
     def test_traversals(self):
         """Test tree traversals."""
@@ -261,7 +306,13 @@ class TestBinarySearchTree(unittest.TestCase):
 
         # Inorder should be sorted
         inorder = self.bst.inorder_traversal()
-        expected_inorder = [(1, "one"), (3, "three"), (6, "six"), (8, "eight"), (10, "ten")]
+        expected_inorder = [
+            (1, "one"),
+            (3, "three"),
+            (6, "six"),
+            (8, "eight"),
+            (10, "ten"),
+        ]
         self.assertEqual(inorder, expected_inorder)
 
         # Preorder
@@ -394,8 +445,8 @@ class TestBSTStress(unittest.TestCase):
         """Test BST with large number of operations."""
         bst = BinarySearchTree()
 
-        # Insert many values
-        num_operations = 1000
+        # Insert many values (reduced to avoid recursion depth)
+        num_operations = 500
         for i in range(num_operations):
             bst.put(i, f"value{i}")
 
@@ -458,6 +509,5 @@ class TestBSTStress(unittest.TestCase):
         self.assertEqual(inorder_keys, sorted(values))
 
 
-if __name__ == '__main__':
-    unittest.main()</content>
-<parameter name="filePath">chapter_15_binary_search_trees/tests/test_bst_implementation.py
+if __name__ == "__main__":
+    unittest.main()

@@ -13,7 +13,7 @@ import os
 from typing import List, Tuple, Any
 
 # Add the code directory to the path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'code'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "code"))
 
 from bst_implementation import BinarySearchTree, BSTAnalysis
 
@@ -25,7 +25,9 @@ def print_tree_visualization(root, title: str = "BST Structure", max_width: int 
     def print_tree_helper(node, prefix: str = "", is_left: bool = True):
         if node:
             # Print right subtree first (for left-to-right layout)
-            print_tree_helper(node.right, prefix + ("│   " if is_left else "    "), False)
+            print_tree_helper(
+                node.right, prefix + ("│   " if is_left else "    "), False
+            )
 
             # Print current node
             connector = "└── " if is_left else "┌── "
@@ -169,7 +171,7 @@ def demonstrate_range_queries():
         (1, 5, "Start range"),
         (15, 20, "End range"),
         (10, 10, "Single value"),
-        (25, 30, "Outside range")
+        (25, 30, "Outside range"),
     ]
 
     for low, high, description in test_ranges:
@@ -185,11 +187,14 @@ def performance_comparison():
     print("\n\nPERFORMANCE COMPARISON")
     print("=" * 50)
 
-    sizes = [100, 1000]
+    sizes = [100, 500]  # Reduced to avoid recursion depth
     scenarios = [
         ("Worst Case (sorted)", lambda n: list(range(n))),
-        ("Best Case (balanced)", lambda n: BSTAnalysis.generate_best_case_bst(n).inorder_traversal()),
-        ("Random Case", lambda n: random.sample(range(n), n))
+        (
+            "Best Case (balanced)",
+            lambda n: BSTAnalysis.generate_best_case_bst(n).inorder_traversal(),
+        ),
+        ("Random Case", lambda n: random.sample(range(n), n)),
     ]
 
     print("Size | Scenario       | Build Time | Height | Valid BST")
@@ -215,7 +220,9 @@ def performance_comparison():
             height = bst.get_height()
             is_valid = bst.is_valid_bst()
 
-            print(".4f")
+            print(
+                f"{size:5d} | {scenario_name:14s} | {build_time:.4f}s | {height:6d} | {is_valid}"
+            )
 
 
 def demonstrate_bst_shapes():
@@ -232,7 +239,7 @@ def demonstrate_bst_shapes():
     print("  Properties:")
     print(f"    Height: {worst_analysis['height']}")
     print(f"    Balanced: {worst_analysis['is_balanced']}")
-    print(".2f")
+    print(f"    Balance Factor: {worst_analysis['balance_factor_avg']:.2f}")
 
     # Best case (balanced)
     print("\n2. Best Case BST (balanced)")
@@ -243,7 +250,7 @@ def demonstrate_bst_shapes():
     print("  Properties:")
     print(f"    Height: {best_analysis['height']}")
     print(f"    Balanced: {best_analysis['is_balanced']}")
-    print(".2f")
+    print(f"    Balance Factor: {best_analysis['balance_factor_avg']:.2f}")
 
     # Random case
     print("\n3. Random Case BST")
@@ -254,7 +261,7 @@ def demonstrate_bst_shapes():
     print("  Properties:")
     print(f"    Height: {random_analysis['height']}")
     print(f"    Balanced: {random_analysis['is_balanced']}")
-    print(".2f")
+    print(f"    Balance Factor: {random_analysis['balance_factor_avg']:.2f}")
 
 
 def benchmark_vs_other_structures():
@@ -263,9 +270,16 @@ def benchmark_vs_other_structures():
     print("=" * 50)
 
     import sys
-    sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', 'chapter_13_hash_tables', 'code'))
+
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(__file__), "..", "..", "chapter_13_hash_tables", "code"
+        ),
+    )
     try:
         from hash_table_implementations import HashTableSeparateChaining
+
         hash_available = True
     except ImportError:
         hash_available = False
@@ -421,8 +435,10 @@ def main():
     benchmark_vs_other_structures()
 
     # Interactive demo
-    response = input("\nWould you like to explore BSTs interactively? (y/n): ").strip().lower()
-    if response == 'y' or response == 'yes':
+    response = (
+        input("\nWould you like to explore BSTs interactively? (y/n): ").strip().lower()
+    )
+    if response == "y" or response == "yes":
         interactive_bst_explorer()
 
     print("\n" + "=" * 60)
@@ -437,6 +453,5 @@ def main():
     print("\nBSTs are the foundation of ordered data structures!")
 
 
-if __name__ == '__main__':
-    main()</content>
-<parameter name="filePath">chapter_15_binary_search_trees/examples/bst_demo.py
+if __name__ == "__main__":
+    main()

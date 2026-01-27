@@ -35,7 +35,7 @@ def demonstrate_basic_operations():
     print("\nExtract elements:")
     extracted = []
     while not heap.is_empty():
-        max_val = heap.remove_top()
+        max_val = heap.extract_top()
         extracted.append(max_val)
         print(f"  Extracted: {max_val}, heap: {heap.get_heap_array()}")
 

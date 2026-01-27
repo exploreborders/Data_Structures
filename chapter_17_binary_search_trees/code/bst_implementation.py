@@ -5,7 +5,7 @@ This module implements Binary Search Trees (BSTs) providing an efficient
 ordered mapping ADT with logarithmic-time operations.
 """
 
-from typing import List, Optional, Tuple, Any, Callable
+from typing import List, Optional, Tuple, Any, Callable, Dict
 import random
 
 
@@ -277,11 +277,10 @@ class BinarySearchTree:
         if node is None:
             return
 
-        if low <= node.key <= high:
-            result.append(node.key)
-
         if node.key > low:
             self._collect_keys_in_range(node.left, low, high, result)
+        if low <= node.key <= high:
+            result.append(node.key)
         if node.key < high:
             self._collect_keys_in_range(node.right, low, high, result)
 
@@ -298,11 +297,10 @@ class BinarySearchTree:
         if node is None:
             return
 
-        if low <= node.key <= high:
-            result.append(node.value)
-
         if node.key > low:
             self._collect_values_in_range(node.left, low, high, result)
+        if low <= node.key <= high:
+            result.append(node.value)
         if node.key < high:
             self._collect_values_in_range(node.right, low, high, result)
 
@@ -454,7 +452,7 @@ class BSTAnalysis:
     @staticmethod
     def benchmark_bst_operations(
         bst: BinarySearchTree, num_operations: int = 1000
-    ) -> Dict[str, float]:
+    ) -> Dict[str, Any]:
         """Benchmark BST operations."""
         import time
 

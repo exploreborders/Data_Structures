@@ -11,10 +11,7 @@ import sys
 import os
 
 # Add the code directory to the path for imports
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "code"))
-sys.path.append(
-    os.path.join(os.path.dirname(__file__), "..", "..", "chapter_20_graphs", "code")
-)
+sys.path.insert(0, os.path.join(os.getcwd(), "..", "code"))
 
 from advanced_graph_algorithms import (
     AdvancedGraphTraversal,

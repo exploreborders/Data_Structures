@@ -10,7 +10,7 @@ import sys
 import os
 
 # Add the code directory to the path for imports
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'code'))
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "code"))
 from heap_implementations import BinaryHeap, PriorityQueue, HeapAnalysis
 
 
@@ -27,7 +27,9 @@ def demonstrate_heap_operations():
 
     for val in values:
         min_heap.insert(val)
-        print(f"  After inserting {val}: heap = {min_heap.get_heap_array()}, valid = {min_heap.is_valid_heap()}")
+        print(
+            f"  After inserting {val}: heap = {min_heap.get_heap_array()}, valid = {min_heap.is_valid_heap()}"
+        )
 
     print(f"\nFinal heap: {min_heap.get_heap_array()}")
     print(f"Heap property maintained: {min_heap.is_valid_heap()}")
@@ -76,14 +78,16 @@ def demonstrate_priority_queue():
 
     # Task scheduling simulation
     print("Task Scheduling with Priority Queue:")
-    pq = PriorityQueue[tuple]("min")  # Min-heap for priority (lower number = higher priority)
+    pq = PriorityQueue[tuple](
+        "min"
+    )  # Min-heap for priority (lower number = higher priority)
 
     tasks = [
         (3, "Low priority task"),
         (1, "High priority task"),
         (2, "Medium priority task"),
         (1, "Another high priority task"),
-        (4, "Very low priority task")
+        (4, "Very low priority task"),
     ]
 
     print("Adding tasks to priority queue:")
@@ -91,10 +95,24 @@ def demonstrate_priority_queue():
         pq.insert((priority, description))
         print(f"  Added: {description} (priority {priority})")
 
-    print("
-Processing tasks in priority order:")
+    print("\nProcessing tasks in priority order:")
     while not pq.is_empty():
         priority, description = pq.remove_top()
         print(f"  Processing: {description} (priority {priority})")
 
     print()
+
+
+if __name__ == "__main__":
+    print("🏥 Fixed Priority Queue Demonstrations")
+    print("=====================================")
+
+    demonstrate_heap_operations()
+    demonstrate_max_heap_vs_min_heap()
+    demonstrate_priority_queue()
+
+    print("\n🎯 Key Takeaways:")
+    print("- Binary heaps provide efficient priority-based operations")
+    print("- Min-heap always gives smallest element, max-heap gives largest")
+    print("- Priority queues perfect for scheduling and task management")
+    print("- All heap operations maintain optimal O(log n) complexity")

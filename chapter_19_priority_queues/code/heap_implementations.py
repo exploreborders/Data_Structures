@@ -121,7 +121,8 @@ class BinaryHeap(Generic[T]):
         last = self._heap[self._size - 1]
         self._heap[0] = last
         self._size -= 1
-        self._heap.pop()  # Remove the last element
+        # Don't immediately shrink the array - keep it allocated for memory efficiency
+        # self._heap.pop()  # Comment out to keep allocated memory
 
         if self._size > 0:
             self._sink_down(0)
@@ -206,11 +207,15 @@ class BinaryHeap(Generic[T]):
 
     def get_heap_array(self) -> List[T]:
         """Get the heap as a list (for debugging/visualization)."""
-        return self._heap[: self._size]
+        return self._heap[: self._size]  # Active elements only
+
+    def get_allocated_array(self) -> List[T]:
+        """Get the full allocated array (including unused capacity)."""
+        return self._heap[:]
 
     def is_valid_heap(self) -> bool:
         """
-        Check if the heap maintains the heap property.
+        Check if the heap maintains heap property.
 
         Returns:
             True if heap property is maintained
@@ -219,13 +224,19 @@ class BinaryHeap(Generic[T]):
             left = self._left_child(i)
             right = self._right_child(i)
 
-            if left < self._size and not self._compare(self._heap[i], self._heap[left]):
+            # For min-heap: parent <= child, for max-heap: parent >= child
+            if left < self._size and not self._heap_is_valid_pair(i, left):
                 return False
-            if right < self._size and not self._compare(
-                self._heap[i], self._heap[right]
-            ):
+            if right < self._size and not self._heap_is_valid_pair(i, right):
                 return False
         return True
+
+    def _heap_is_valid_pair(self, parent_idx: int, child_idx: int) -> bool:
+        """Check if parent-child pair satisfies heap property."""
+        if self.heap_type == "min":
+            return self._heap[parent_idx] <= self._heap[child_idx]
+        else:  # max-heap
+            return self._heap[parent_idx] >= self._heap[child_idx]
 
     def heap_sort(self, arr: Optional[List[T]] = None) -> List[T]:
         """
@@ -451,7 +462,7 @@ class HeapAnalysis:
 
         size = len(heap)
         if size == 0:
-            return {"height": 0, "perfect_height": 0, "is_perfect": True}
+            return {"height": 0, "perfect_height": 0, "is_perfect": True, "size": 0}
 
         # Theoretical height for perfect binary tree
         perfect_height = int(math.log2(size))

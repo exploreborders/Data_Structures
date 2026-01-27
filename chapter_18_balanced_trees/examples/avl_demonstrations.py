@@ -4,10 +4,11 @@ Chapter 18 Examples: Balanced Binary Search Trees - AVL Tree Demonstrations
 Interactive examples showing AVL tree balancing, rotations, and performance guarantees.
 """
 
+# Add the code directory to the path
 import sys
 import os
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "code"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "code"))
 from avl_tree import AVLTree
 import random
 
@@ -124,7 +125,10 @@ def compare_avl_vs_unbalanced():
 
     print(f"Tree size: {size}")
     print(f"AVL tree height: {avl_tree.get_height()}")
-    print(".1f")
+    import math
+
+    theoretical_max = int(1.44 * math.log2(size + 1))
+    print(f"Theoretical max height: {theoretical_max:.1f}")
     print(f"AVL tree valid: {avl_tree.is_valid_avl()}")
 
     # Test search performance
@@ -139,7 +143,7 @@ def compare_avl_vs_unbalanced():
     avl_time = time.time() - start
 
     print(f"\nSearch performance ({len(test_keys)} operations):")
-    print(".6f")
+    print(f"AVL search time: {avl_time:.6f}s")
 
 
 def demonstrate_tree_visualization():

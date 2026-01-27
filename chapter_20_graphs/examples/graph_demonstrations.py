@@ -119,7 +119,7 @@ def demonstrate_shortest_paths():
         else:
             path = ShortestPaths.reconstruct_path(predecessors, "A", vertex)
             path_str = " -> ".join(path) if path else "no path"
-            print(".1f")
+            print(f"  {vertex}: unreachable")
 
     print()
 
@@ -137,7 +137,7 @@ def demonstrate_shortest_paths():
         for vertex in sorted(neg_graph.vertices):
             path = ShortestPaths.reconstruct_path(predecessors, "A", vertex)
             path_str = " -> ".join(path) if path else "no path"
-            print(".1f")
+            print(f"  {vertex}: {path_str}")
     else:
         print("  Negative cycle detected!")
     print()
@@ -447,7 +447,7 @@ def demonstrate_graph_visualization():
             path = ShortestPaths.reconstruct_path(predecessors, "A", vertex)
             if path:
                 path_str = " -> ".join(path)
-                print(".1f")
+            print(f"  {vertex}: {distances[vertex]:.1f} miles")
     print()
 
 
