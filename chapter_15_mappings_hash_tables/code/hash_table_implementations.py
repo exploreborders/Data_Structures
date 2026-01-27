@@ -26,7 +26,9 @@ class HashFunction:
         return int(table_size * fractional_part)
 
     @staticmethod
-    def universal_hash(key: Any, table_size: int, a: int = 31, b: int = 7, p: int = 10**9 + 7) -> int:
+    def universal_hash(
+        key: Any, table_size: int, a: int = 31, b: int = 7, p: int = 10**9 + 7
+    ) -> int:
         """
         Universal hash function using random coefficients.
         h(k) = ((a * k + b) mod p) mod m
@@ -48,7 +50,7 @@ class HashFunction:
         hash_val = 14695981039346656037  # FNV offset basis
         fnv_prime = 1099511628211  # FNV prime
 
-        for byte in key.encode('utf-8'):
+        for byte in key.encode("utf-8"):
             hash_val ^= byte
             hash_val *= fnv_prime
 
@@ -194,6 +196,7 @@ class HashTableOpenAddressing:
 
     class Entry:
         """Entry that can be a key-value pair, None (empty), or DELETED."""
+
         def __init__(self, key: Any = None, value: Any = None):
             self.key = key
             self.value = value
@@ -257,7 +260,9 @@ class HashTableOpenAddressing:
 
             if entry.is_empty:
                 # Found empty slot
-                return (deleted_slot if deleted_slot != -1 and for_insertion else slot_idx), False
+                return (
+                    deleted_slot if deleted_slot != -1 and for_insertion else slot_idx
+                ), False
             elif entry.is_deleted:
                 # Remember first deleted slot for insertion
                 if deleted_slot == -1 and for_insertion:
@@ -423,7 +428,7 @@ class HashTableSet:
         """Return all items in the set."""
         return self.hash_table.keys()
 
-    def union(self, other: 'HashTableSet') -> 'HashTableSet':
+    def union(self, other: "HashTableSet") -> "HashTableSet":
         """Return the union of this set with another."""
         result = HashTableSet()
         for item in self.items():
@@ -432,7 +437,7 @@ class HashTableSet:
             result.add(item)
         return result
 
-    def intersection(self, other: 'HashTableSet') -> 'HashTableSet':
+    def intersection(self, other: "HashTableSet") -> "HashTableSet":
         """Return the intersection of this set with another."""
         result = HashTableSet()
         for item in self.items():
@@ -440,7 +445,7 @@ class HashTableSet:
                 result.add(item)
         return result
 
-    def difference(self, other: 'HashTableSet') -> 'HashTableSet':
+    def difference(self, other: "HashTableSet") -> "HashTableSet":
         """Return the difference of this set with another."""
         result = HashTableSet()
         for item in self.items():
@@ -453,7 +458,9 @@ class HashTableAnalysis:
     """Tools for analyzing hash table performance."""
 
     @staticmethod
-    def test_hash_function_distribution(hash_func, keys: List[Any], table_size: int) -> Dict[int, int]:
+    def test_hash_function_distribution(
+        hash_func, keys: List[Any], table_size: int
+    ) -> Dict[int, int]:
         """
         Test how well a hash function distributes keys.
 
@@ -468,7 +475,9 @@ class HashTableAnalysis:
         return distribution
 
     @staticmethod
-    def calculate_distribution_uniformity(distribution: Dict[int, int], table_size: int) -> float:
+    def calculate_distribution_uniformity(
+        distribution: Dict[int, int], table_size: int
+    ) -> float:
         """
         Calculate how uniform a hash distribution is.
 
@@ -480,13 +489,14 @@ class HashTableAnalysis:
 
         expected_count = sum(distribution.values()) / table_size
         variance = sum((count - expected_count) ** 2 for count in distribution.values())
-        variance += expected_count ** 2 * (table_size - len(distribution))  # Empty slots
+        variance += expected_count**2 * (table_size - len(distribution))  # Empty slots
 
         return variance / table_size
 
     @staticmethod
-    def benchmark_hash_table_operations(hash_table_class, operations: List[Tuple[str, Any, Any]],
-                                       initial_size: int = 16) -> Dict[str, float]:
+    def benchmark_hash_table_operations(
+        hash_table_class, operations: List[Tuple[str, Any, Any]], initial_size: int = 16
+    ) -> Dict[str, float]:
         """
         Benchmark hash table operations.
 
@@ -505,6 +515,8 @@ class HashTableAnalysis:
             for _, key, val in puts:
                 ht.put(key, val)
             results["put_time"] = time.time() - start_time
+        else:
+            results["put_time"] = None
 
         # Benchmark gets
         gets = [(op, key, val) for op, key, val in operations if op == "get"]
@@ -516,6 +528,8 @@ class HashTableAnalysis:
                 except KeyError:
                     pass  # Expected for some tests
             results["get_time"] = time.time() - start_time
+        else:
+            results["get_time"] = None
 
         # Benchmark removes
         removes = [(op, key, val) for op, key, val in operations if op == "remove"]
@@ -531,3 +545,4 @@ class HashTableAnalysis:
         results["final_size"] = len(ht)
         results["load_factor"] = ht.get_load_factor()
 
+        return results

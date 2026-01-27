@@ -369,7 +369,7 @@ def demonstrate_concatenation_performance():
     print("Performance Comparison:")
     print(f"Efficient concatenation: {efficient_time:.6f} seconds")
     print(f"Copy-based concatenation: {copy_time:.6f} seconds")
-    print(".1f")
+    print(f"Speedup: {copy_time / efficient_time:.1f}x faster")
 
     return efficient_time, copy_time
 

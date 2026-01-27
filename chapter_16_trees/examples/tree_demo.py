@@ -11,7 +11,7 @@ import os
 from typing import List, Optional, Any
 
 # Add the code directory to the path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'code'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "code"))
 
 from tree_implementations import (
     TreeNode,
@@ -19,17 +19,23 @@ from tree_implementations import (
     BinarySearchTree,
     AVLTree,
     Heap,
-    TreeAnalysis
+    TreeAnalysis,
 )
 
 
-def print_tree_visualization(root: Optional[TreeNode], title: str = "Tree Visualization"):
+def print_tree_visualization(
+    root: Optional[TreeNode], title: str = "Tree Visualization"
+):
     """Simple text-based tree visualization."""
     print(f"\n{title}:")
 
-    def print_tree_helper(node: Optional[TreeNode], prefix: str = "", is_left: bool = True):
+    def print_tree_helper(
+        node: Optional[TreeNode], prefix: str = "", is_left: bool = True
+    ):
         if node:
-            print_tree_helper(node.right, prefix + ("│   " if is_left else "    "), False)
+            print_tree_helper(
+                node.right, prefix + ("│   " if is_left else "    "), False
+            )
             print(f"{prefix}{'└── ' if is_left else '┌── '}{node.value}")
             print_tree_helper(node.left, prefix + ("    " if is_left else "│   "), True)
 
@@ -131,7 +137,9 @@ def demonstrate_avl_balance():
         print(f"\nInserting {val}:")
         avl.insert(val)
         print_tree_visualization(avl.root)
-        print(f"Height: {avl.get_height()}, Balanced: {TreeAnalysis.is_balanced_bst(avl.root)}")
+        print(
+            f"Height: {avl.get_height()}, Balanced: {TreeAnalysis.is_balanced_bst(avl.root)}"
+        )
 
     print(f"\nFinal tree - Height: {avl.get_height()}")
     print(f"Balanced: {TreeAnalysis.is_balanced_bst(avl.root)}")
@@ -220,8 +228,7 @@ def demonstrate_tree_analysis():
 
     print_tree_visualization(root, "Analysis Tree")
 
-    print("
-Tree Statistics:")
+    print("Tree Statistics:")
     print(f"Height: {tree.get_height()}")
     print(f"Total nodes: {tree.count_nodes()}")
     print(f"Leaf nodes: {tree.count_leaves()}")
@@ -262,40 +269,46 @@ def performance_comparison():
 
     for size in sizes:
         print(f"\nTesting with {size} elements:")
-
         # Generate test data
-        values = list(range(size))
-        search_values = [i * (size // 10) for i in range(10)]  # Every 10th value
+        if size == 1000:
+            # For large sizes, use random data to avoid worst-case recursion
+            import random
+
+            values = list(range(size))
+            random.shuffle(values)
+            search_values = [i * (size // 10) for i in range(10)]  # Every 10th value
+        else:
+            values = list(range(size))
+            search_values = [i * (size // 10) for i in range(10)]  # Every 10th value
 
         # BST Performance
         bst = BinarySearchTree()
         start_time = time.time()
-        for val in values:
-            bst.insert(val)
-        bst_insert_time = time.time() - start_time
-
-        start_time = time.time()
-        for val in search_values:
-            bst.search(val)
-        bst_search_time = time.time() - start_time
-
+        try:
+            for val in values:
+                bst.insert(val)
+            bst_insert_time = time.time() - start_time
+            start_time = time.time()
+            for val in search_values:
+                bst.search(val)
+                bst_search_time = time.time() - start_time
+        except RecursionError:
+            print(f"BST insertion failed due to recursion depth limit at size {size}")
+            bst_insert_time = None
+            bst_search_time = None
         # AVL Performance
         avl = AVLTree()
         start_time = time.time()
         for val in values:
             avl.insert(val)
-        avl_insert_time = time.time() - start_time
-
+            avl_insert_time = time.time() - start_time
         start_time = time.time()
         for val in search_values:
             avl.search(val)
-        avl_search_time = time.time() - start_time
+            avl_search_time = time.time() - start_time
 
         print("Implementation | Insert Time | Search Time | Height | Balanced")
         print("---------------|-------------|-------------|--------|----------")
-        print(".4f")
-        print(".4f")
-
         print(f"AVL provides guaranteed balance (O(log n)) vs BST's average case.")
 
 
@@ -364,9 +377,9 @@ def interactive_tree_builder():
             elif cmd == "stats":
                 print(f"Height: {tree.get_height()}")
                 print(f"Nodes: {tree.count_nodes()}")
-                if hasattr(tree, 'is_valid_bst'):
+                if hasattr(tree, "is_valid_bst"):
                     print(f"Valid BST: {tree.is_valid_bst()}")
-                if hasattr(tree, 'root') and tree.root:
+                if hasattr(tree, "root") and tree.root:
                     print(f"Balanced: {TreeAnalysis.is_balanced_bst(tree.root)}")
             else:
                 print("Invalid command or not supported for this tree type.")
@@ -391,8 +404,12 @@ def main():
     performance_comparison()
 
     # Interactive demo
-    response = input("\nWould you like to explore tree operations interactively? (y/n): ").strip().lower()
-    if response == 'y' or response == 'yes':
+    response = (
+        input("\nWould you like to explore tree operations interactively? (y/n): ")
+        .strip()
+        .lower()
+    )
+    if response == "y" or response == "yes":
         interactive_tree_builder()
 
     print("\n" + "=" * 60)
@@ -407,6 +424,5 @@ def main():
     print("\nTrees are fundamental to efficient hierarchical data processing!")
 
 
-if __name__ == '__main__':
-    main()</content>
-<parameter name="filePath">chapter_14_trees/examples/tree_demo.py
+if __name__ == "__main__":
+    main()

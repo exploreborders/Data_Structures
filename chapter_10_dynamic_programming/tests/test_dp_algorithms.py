@@ -7,7 +7,7 @@ import sys
 import os
 
 # Add the code directory to the path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'code'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "code"))
 
 from dp_algorithms import DynamicProgramming
 
@@ -67,16 +67,20 @@ class TestKnapsack01(unittest.TestCase):
     def test_knapsack_basic(self):
         """Test basic knapsack functionality."""
         max_val_memo, items_memo = DynamicProgramming.knapsack_01_memoization(
-            self.weights, self.values, self.capacity)
+            self.weights, self.values, self.capacity
+        )
         max_val_tab, items_tab = DynamicProgramming.knapsack_01_tabulation(
-            self.weights, self.values, self.capacity)
+            self.weights, self.values, self.capacity
+        )
 
         # Both should give same max value
         self.assertEqual(max_val_memo, 7)
         self.assertEqual(max_val_tab, 7)
 
         # Both should select same items (though order might differ)
-        self.assertEqual(set(items_memo), {0, 1})  # Items 0 (weight 2, value 3) and 1 (weight 3, value 4)
+        self.assertEqual(
+            set(items_memo), {0, 1}
+        )  # Items 0 (weight 2, value 3) and 1 (weight 3, value 4)
         self.assertEqual(set(items_tab), {0, 1})
 
     def test_knapsack_edge_cases(self):
@@ -107,7 +111,9 @@ class TestKnapsack01(unittest.TestCase):
         values = [60, 100, 120]
         capacity = 50
 
-        max_val, items = DynamicProgramming.knapsack_01_tabulation(weights, values, capacity)
+        max_val, items = DynamicProgramming.knapsack_01_tabulation(
+            weights, values, capacity
+        )
         self.assertEqual(max_val, 220)  # Items 1 and 2: 100 + 120 = 220
         self.assertEqual(set(items), {1, 2})
 
@@ -161,9 +167,15 @@ class TestCoinChange(unittest.TestCase):
 
     def test_coin_change_minimum_basic(self):
         """Test minimum coin change basic cases."""
-        self.assertEqual(DynamicProgramming.coin_change_minimum([1, 2, 5], 11), 3)  # 5+5+1
-        self.assertEqual(DynamicProgramming.coin_change_minimum([2], 3), -1)  # Impossible
-        self.assertEqual(DynamicProgramming.coin_change_minimum([1], 0), 0)  # No coins needed
+        self.assertEqual(
+            DynamicProgramming.coin_change_minimum([1, 2, 5], 11), 3
+        )  # 5+5+1
+        self.assertEqual(
+            DynamicProgramming.coin_change_minimum([2], 3), -1
+        )  # Impossible
+        self.assertEqual(
+            DynamicProgramming.coin_change_minimum([1], 0), 0
+        )  # No coins needed
 
     def test_coin_change_minimum_edge_cases(self):
         """Test minimum coin change edge cases."""
@@ -179,8 +191,8 @@ class TestCoinChange(unittest.TestCase):
         self.assertEqual(DynamicProgramming.coin_change_ways([1, 2, 5], 5), 4)
         # Ways: 5, 2+2+1, 2+1+1+1, 1+1+1+1+1
 
-        self.assertEqual(DynamicProgramming.coin_change_ways([2, 5, 10], 10), 4)
-        # Ways: 10, 5+5, 5+2+2+1(wait no), actually: 10, 5+5, 2×5, 10
+        self.assertEqual(DynamicProgramming.coin_change_ways([2, 5, 10], 10), 3)
+        # Ways: 10, 5+5, 2+2+2+2+2
 
     def test_coin_change_ways_edge_cases(self):
         """Test number of ways edge cases."""
@@ -215,7 +227,9 @@ class TestSubsetSum(unittest.TestCase):
     def test_subset_sum_basic(self):
         """Test basic subset sum cases."""
         self.assertTrue(DynamicProgramming.subset_sum([3, 34, 4, 12, 5, 2], 9))  # 4+5
-        self.assertTrue(DynamicProgramming.subset_sum([3, 34, 4, 12, 5, 2], 30))  # 3+4+12+5+2+4(wait), actually 34+4-12+5-2= wait, let's check: 4+5=9
+        self.assertFalse(
+            DynamicProgramming.subset_sum([3, 34, 4, 12, 5, 2], 30)
+        )  # No combination equals 30
         self.assertFalse(DynamicProgramming.subset_sum([3, 34, 4, 12, 5, 2], 1))
 
     def test_subset_sum_edge_cases(self):
@@ -232,5 +246,5 @@ class TestSubsetSum(unittest.TestCase):
         self.assertTrue(DynamicProgramming.subset_sum([1, 2, 3], 0))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

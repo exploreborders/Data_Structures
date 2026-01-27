@@ -391,5 +391,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()</content>
-<parameter name="filePath">chapter_13_hash_tables/examples/hash_table_demo.py
+    main()

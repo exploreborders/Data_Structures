@@ -1,4 +1,10 @@
 import unittest
+import sys
+import os
+
+# Add root directory to path so imports work
+sys.path.insert(0, os.path.join(os.getcwd(), "..", ".."))
+
 from chapter_08_doubly_linked_lists.code.concatenation_impl import (
     DoublyNode,
     DoublyLinkedList,

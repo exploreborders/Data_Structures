@@ -785,21 +785,30 @@ class TreeAnalysis:
         if not inorder or not preorder:
             return None
 
-        # Root is first element in preorder
-        root_val = preorder[0]
-        root = TreeNode(root_val)
+        try:
+            # Root is first element in preorder
+            root_val = preorder[0]
+            root = TreeNode(root_val)
 
-        # Find root in inorder
-        root_index = inorder.index(root_val)
+            # Find root in inorder
+            if root_val in inorder:
+                root_index = inorder.index(root_val)
 
-        # Recursively build left and right subtrees
-        left_inorder = inorder[:root_index]
-        right_inorder = inorder[root_index + 1 :]
+                # Recursively build left and right subtrees
+                left_inorder = inorder[:root_index]
+                right_inorder = inorder[root_index + 1 :]
 
-        left_preorder = preorder[1 : 1 + len(left_inorder)]
-        right_preorder = preorder[1 + len(left_inorder) :]
+                left_preorder = preorder[1 : 1 + len(left_inorder)]
+                right_preorder = preorder[1 + len(left_inorder) :]
 
-        root.left = TreeAnalysis.build_tree_from_traversals(left_inorder, left_preorder)
-        root.right = TreeAnalysis.build_tree_from_traversals(
-            right_inorder, right_preorder
-        )
+                root.left = TreeAnalysis.build_tree_from_traversals(
+                    left_inorder, left_preorder
+                )
+                root.right = TreeAnalysis.build_tree_from_traversals(
+                    right_inorder, right_preorder
+                )
+
+                return root
+        except (ValueError, IndexError):
+            # Invalid traversal data - missing root or malformed traversals
+            return None

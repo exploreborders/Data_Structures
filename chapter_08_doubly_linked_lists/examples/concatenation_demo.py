@@ -3,6 +3,7 @@
 Examples demonstrating Chapter 8 Doubly Linked List concatenation.
 Run this script to see efficient O(1) list merging operations.
 """
+
 import sys
 import os
 
@@ -183,7 +184,7 @@ def edge_cases_demo():
     duration = time.time() - start
 
     print(f"After concatenation: {len(large1)} total items")
-    print(".4f")
+    print(f"Time taken: {duration:.4f} seconds")
     print("Note: O(1) concatenation is fast even for large lists!")
     print()
 
@@ -343,7 +344,16 @@ def practical_applications():
     print("Undoing last 2 operations:")
     for _ in range(2):
         if undo_stack.tail:
-            operation = undo_stack.remove_last()
+            operation = undo_stack.tail.data  # Get last operation directly
+
+            # Remove from undo stack by setting new tail
+            if undo_stack.tail.prev:
+                undo_stack.tail = undo_stack.tail.prev
+                undo_stack.tail.next = None
+            else:
+                undo_stack.head = None
+                undo_stack.tail = None
+
             redo_stack.append(operation)
             print(f"  Undid: {operation}")
 

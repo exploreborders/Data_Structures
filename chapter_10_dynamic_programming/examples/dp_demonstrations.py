@@ -11,7 +11,7 @@ import sys
 import os
 
 # Add the code directory to the path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'code'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "code"))
 
 from dp_algorithms import DynamicProgramming
 
@@ -43,10 +43,12 @@ def demonstrate_fibonacci_evolution():
     print("\n2. Memoization (Top-Down DP):")
     result, time_taken = time_function(DynamicProgramming.fibonacci_memoization, 35)
     print(f"   Result: {result} (time: {time_taken:.6f}s)")
+
     # Tabulation
     print("\n3. Tabulation (Bottom-Up DP):")
     result, time_taken = time_function(DynamicProgramming.fibonacci_tabulation, 35)
     print(f"   Result: {result} (time: {time_taken:.6f}s)")
+
     # Larger values
     print("\n4. Tabulation for larger values:")
     result, time_taken = time_function(DynamicProgramming.fibonacci_tabulation, 100)
@@ -71,7 +73,7 @@ def demonstrate_knapsack_problem():
         ("Phone", 1, 1500),
         ("Book", 2, 100),
         ("Headphones", 1, 500),
-        ("Tablet", 2, 800)
+        ("Tablet", 2, 800),
     ]
 
     weights = [item[1] for item in items]
@@ -86,7 +88,8 @@ def demonstrate_knapsack_problem():
 
     # Tabulation approach
     max_value, selected_indices = DynamicProgramming.knapsack_01_tabulation(
-        weights, values, capacity)
+        weights, values, capacity
+    )
 
     print(f"\nMaximum value: ${max_value}")
     print("Selected items:")
@@ -127,7 +130,7 @@ def demonstrate_lcs_problem():
     examples = [
         ("ABCBDAB", "BDCABA"),
         ("XMJYAUZ", "MZJAWXU"),
-        ("PROGRAMMING", "ALGORITHMS")
+        ("PROGRAMMING", "ALGORITHMS"),
     ]
 
     print("\nMore examples:")
@@ -183,7 +186,7 @@ def demonstrate_edit_distance():
         ("kitten", "sitting"),
         ("saturday", "sunday"),
         ("horse", "ros"),
-        ("intention", "execution")
+        ("intention", "execution"),
     ]
 
     for word1, word2 in word_pairs:
@@ -226,7 +229,9 @@ def demonstrate_subset_sum():
             subset = []
             remaining = target
             for num in sorted(nums, reverse=True):
-                if num <= remaining and DynamicProgramming.subset_sum(nums, remaining - num):
+                if num <= remaining and DynamicProgramming.subset_sum(
+                    nums, remaining - num
+                ):
                     subset.append(num)
                     remaining -= num
                     if remaining == 0:
