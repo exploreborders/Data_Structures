@@ -182,17 +182,21 @@ class GraphAnalysis:
     def has_cycle(graph: Graph[T]) -> bool:
         """Detect if graph has cycle using DFS."""
         visited = set()
+        recursion_stack = set()
 
-        def has_cycle_visit(vertex: T, parent: Optional[T] = None) -> bool:
+        def has_cycle_visit(vertex: T) -> bool:
             visited.add(vertex)
+            recursion_stack.add(vertex)
 
             for neighbor_info in graph.get_neighbors(vertex):
                 neighbor = neighbor_info[0]
-                if neighbor != parent:
-                    if neighbor in visited:
+                if neighbor not in visited:
+                    if has_cycle_visit(neighbor):
                         return True
-                    elif has_cycle_visit(neighbor, vertex):
-                        return True
+                elif neighbor in recursion_stack:
+                    return True
+
+            recursion_stack.remove(vertex)
             return False
 
         for vertex in graph.vertices:

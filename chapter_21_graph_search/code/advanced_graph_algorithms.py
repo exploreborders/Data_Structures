@@ -84,7 +84,7 @@ class AdvancedGraphTraversal:
                                 forward_parent, backward_parent, neighbor
                             )
 
-        return None
+        return []
 
     @staticmethod
     def _build_reverse_graph(graph: Graph[str]) -> Graph[str]:
@@ -205,9 +205,30 @@ class TopologicalSort:
         for vertex in graph.vertices:
             if vertex not in visited:
                 if not dfs_visit(vertex):
-                    return None  # Cycle detected
+                    return []  # Cycle detected
 
         result.reverse()  # Reverse to get topological order
+        return result
+
+    @staticmethod
+    def dfs_iterative(graph: Graph[str], start: str) -> List[str]:
+        """Iterative DFS implementation."""
+        visited = set()
+        stack = [start]
+        result = []
+
+        while stack:
+            vertex = stack.pop()
+            if vertex not in visited:
+                visited.add(vertex)
+                result.append(vertex)
+
+                # Add neighbors to stack (reverse order for natural traversal)
+                neighbors = [neighbor for neighbor, _ in graph.get_neighbors(vertex)]
+                for neighbor in reversed(neighbors):
+                    if neighbor not in visited:
+                        stack.append(neighbor)
+
         return result
 
     @staticmethod
@@ -316,6 +337,13 @@ class MinimumSpanningTrees:
 
     @staticmethod
     def prim_mst(graph: Graph[str]) -> List[Tuple[str, str, float]]:
+        if graph.directed:
+            raise ValueError("Prim's algorithm requires undirected graph")
+        if len(graph.vertices) == 0:
+            return []
+        if not graph.weighted:
+            raise ValueError("Prim's algorithm requires weighted graph")
+
         mst = []
         visited = set()
         min_heap = []
@@ -324,7 +352,7 @@ class MinimumSpanningTrees:
         visited.add(start_vertex)
 
         # Add edges from start vertex
-        for neighbor, weight in graph.get_neighbors(start_vertex).items():  # <- .items()
+        for neighbor, weight in graph.get_neighbors(start_vertex):
             heapq.heappush(min_heap, (weight, neighbor, start_vertex))
 
         while min_heap and len(visited) < len(graph.vertices):
@@ -334,12 +362,11 @@ class MinimumSpanningTrees:
             visited.add(vertex)
             mst.append((parent, vertex, weight))
 
-            for neighbor, edge_weight in graph.get_neighbors(vertex).items():  # <- .items()
+            for neighbor, edge_weight in graph.get_neighbors(vertex):
                 if neighbor not in visited:
                     heapq.heappush(min_heap, (edge_weight, neighbor, vertex))
 
         return mst
-
 
     @staticmethod
     def kruskal_mst(graph: Graph[str]) -> List[Tuple[str, str, float]]:
@@ -352,16 +379,17 @@ class MinimumSpanningTrees:
         Returns:
             List of edges in MST: (u, v, weight)
         """
+        if len(graph.vertices) == 0:
+            return []
         if not graph.weighted or graph.directed:
             raise ValueError("Kruskal's algorithm requires undirected weighted graph")
 
         # Sort all edges by weight
         edges = []
         for u in graph.vertices:
-            for v, weight in graph.get_neighbors(u).items():
+            for v, weight in graph.get_neighbors(u):
                 if u < v:  # Avoid duplicates
                     edges.append((weight, u, v))
-
 
         edges.sort()
 
@@ -455,7 +483,7 @@ class GraphConnectivity:
             if vertex not in visited:
                 dfs_ap(vertex)
 
-        return list(set(articulation_points))  # Remove duplicates
+        return set(articulation_points)  # Return as set
 
     @staticmethod
     def find_bridges(graph: Graph[str]) -> List[Tuple[str, str]]:
@@ -503,7 +531,7 @@ class GraphConnectivity:
             if vertex not in visited:
                 dfs_bridge(vertex)
 
-        return bridges
+        return set(bridges)
 
 
 class EulerianPaths:
@@ -614,6 +642,8 @@ class MaximumFlow:
         Returns:
             Maximum flow value
         """
+        if len(graph.vertices) == 0:
+            return 0.0
         if not graph.weighted or not graph.directed:
             raise ValueError("Ford-Fulkerson requires weighted directed graph")
 
@@ -751,7 +781,7 @@ class GraphSearchAnalysis:
         def dfs_visitor(v):
             dfs_result.append(v)
 
-        from chapter_20_graphs.code.graph_implementations import GraphTraversal
+        from graph_implementations import GraphTraversal
 
         GraphTraversal.dfs(graph, start, dfs_visitor)
         dfs_time = time.time() - start_time
@@ -818,7 +848,7 @@ class GraphSearchAnalysis:
         properties["min_degree"] = min(degrees) if degrees else 0
 
         # Connectivity
-        from chapter_20_graphs.code.graph_implementations import GraphAnalysis
+        from graph_implementations import GraphAnalysis
 
         components = GraphAnalysis.connected_components(graph)
         properties["connected_components"] = len(components)
@@ -827,11 +857,14 @@ class GraphSearchAnalysis:
         if not graph.directed:
             has_cycle = GraphAnalysis.has_cycle(graph)
             properties["has_cycle"] = has_cycle
+            properties["is_dag"] = False  # Undirected graphs are not DAGs
+            properties["cycle_count"] = 1 if has_cycle else 0
 
         # DAG properties (for directed graphs)
         if graph.directed:
             is_dag = GraphAnalysis.is_dag(graph)
             properties["is_dag"] = is_dag
+            properties["cycle_count"] = 0 if is_dag else 1
 
             if is_dag:
                 topo_order = GraphAnalysis.topological_sort(graph)
