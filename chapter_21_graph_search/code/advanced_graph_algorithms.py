@@ -5,10 +5,9 @@ This module extends chapter 20 with advanced graph algorithms including topologi
 strongly connected components, articulation points, and maximum flow algorithms.
 """
 
-from typing import List, Dict, Set, Tuple, Optional, Callable, Any
+from typing import List, Dict, Tuple, Optional
 import collections
 import heapq
-import math
 import sys
 import os
 
@@ -94,8 +93,16 @@ class AdvancedGraphTraversal:
             reverse.add_vertex(vertex)
 
         for vertex in graph.vertices:
-            for neighbor, weight in graph.get_neighbors(vertex):
-                reverse.add_edge(neighbor, vertex, weight)
+            # Handle both Dict and List return types from get_neighbors
+            neighbors = graph.get_neighbors(vertex)
+            if isinstance(neighbors, dict):
+                # Dict type: {neighbor: weight, ...}
+                for neighbor, weight in neighbors.items():
+                    reverse.add_edge(neighbor, vertex, weight)
+            else:
+                # List type: [(neighbor, weight), ...]
+                for neighbor, weight in neighbors:
+                    reverse.add_edge(neighbor, vertex, weight)
 
         return reverse
 
@@ -319,15 +326,22 @@ class StronglyConnectedComponents:
 
     @staticmethod
     def _transpose_graph(graph: Graph[str]) -> Graph[str]:
-        """Create transpose of directed graph."""
+        """Create transpose of a directed graph."""
         transpose = Graph(directed=True, weighted=graph.weighted)
 
         for vertex in graph.vertices:
             transpose.add_vertex(vertex)
 
         for vertex in graph.vertices:
-            for neighbor, weight in graph.get_neighbors(vertex):
-                transpose.add_edge(neighbor, vertex, weight)
+            neighbors = graph.get_neighbors(vertex)
+            if isinstance(neighbors, dict):
+                # Dict type: {neighbor: weight, ...}
+                for neighbor, weight in neighbors.items():
+                    transpose.add_edge(neighbor, vertex, weight)
+            else:
+                # List type: [(neighbor, weight), ...]
+                for neighbor, weight in neighbors:
+                    transpose.add_edge(neighbor, vertex, weight)
 
         return transpose
 
@@ -337,12 +351,12 @@ class MinimumSpanningTrees:
 
     @staticmethod
     def prim_mst(graph: Graph[str]) -> List[Tuple[str, str, float]]:
-        if graph.directed:
-            raise ValueError("Prim's algorithm requires undirected graph")
         if len(graph.vertices) == 0:
             return []
         if not graph.weighted:
             raise ValueError("Prim's algorithm requires weighted graph")
+        if graph.directed:
+            raise ValueError("Prim's algorithm requires undirected graph")
 
         mst = []
         visited = set()
@@ -352,8 +366,15 @@ class MinimumSpanningTrees:
         visited.add(start_vertex)
 
         # Add edges from start vertex
-        for neighbor, weight in graph.get_neighbors(start_vertex):
-            heapq.heappush(min_heap, (weight, neighbor, start_vertex))
+        neighbors = graph.get_neighbors(start_vertex)
+        if isinstance(neighbors, dict):
+            # Dict type: {neighbor: weight, ...}
+            for neighbor, weight in neighbors.items():
+                heapq.heappush(min_heap, (weight, neighbor, start_vertex))
+        else:
+            # List type: [(neighbor, weight), ...]
+            for neighbor, weight in neighbors:
+                heapq.heappush(min_heap, (weight, neighbor, start_vertex))
 
         while min_heap and len(visited) < len(graph.vertices):
             weight, vertex, parent = heapq.heappop(min_heap)
@@ -362,9 +383,17 @@ class MinimumSpanningTrees:
             visited.add(vertex)
             mst.append((parent, vertex, weight))
 
-            for neighbor, edge_weight in graph.get_neighbors(vertex):
-                if neighbor not in visited:
-                    heapq.heappush(min_heap, (edge_weight, neighbor, vertex))
+            neighbors = graph.get_neighbors(vertex)
+            if isinstance(neighbors, dict):
+                # Dict type: {neighbor: weight, ...}
+                for neighbor, edge_weight in neighbors.items():
+                    if neighbor not in visited:
+                        heapq.heappush(min_heap, (edge_weight, neighbor, vertex))
+            else:
+                # List type: [(neighbor, edge_weight), ...]
+                for neighbor, edge_weight in neighbors:
+                    if neighbor not in visited:
+                        heapq.heappush(min_heap, (edge_weight, neighbor, vertex))
 
         return mst
 
@@ -387,9 +416,18 @@ class MinimumSpanningTrees:
         # Sort all edges by weight
         edges = []
         for u in graph.vertices:
-            for v, weight in graph.get_neighbors(u):
-                if u < v:  # Avoid duplicates
-                    edges.append((weight, u, v))
+            # Handle both Dict and List return types from get_neighbors
+            neighbors = graph.get_neighbors(u)
+            if isinstance(neighbors, dict):
+                # Dict type: {neighbor: weight, ...}
+                for v, weight in neighbors.items():
+                    if u < v:  # Avoid duplicates
+                        edges.append((weight, u, v))
+            else:
+                # List type: [(neighbor, weight), ...]
+                for v, weight in neighbors:
+                    if u < v:  # Avoid duplicates
+                        edges.append((weight, u, v))
 
         edges.sort()
 
@@ -788,7 +826,7 @@ class GraphSearchAnalysis:
 
         # DFS Iterative
         start_time = time.time()
-        dfs_iter_result = GraphTraversal.dfs_iterative(graph, start)
+        dfs_iter_result = GraphAnalysis.dfs_iterative(graph, start)
         dfs_iter_time = time.time() - start_time
 
         # BFS

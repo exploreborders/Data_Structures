@@ -261,6 +261,182 @@ def is_palindrome_recursive(node):
     return values == values[::-1]
 
 
+class RecursiveLinkedNode:
+    """
+    A node for a recursive linked list implementation.
+
+    This class represents a single node in a linked list that can be
+    manipulated using recursive operations.
+    """
+
+    def __init__(self, element):
+        """
+        Initialize a new node.
+
+        Args:
+            element: The data to store in this node
+        """
+        self.element = element
+        self.next = None
+
+    def get_element(self):
+        """
+        Get the element stored in this node.
+
+        Returns:
+            The element stored in this node
+        """
+        return self.element
+
+    def __str__(self):
+        """Return string representation of the node."""
+        return str(self.element)
+
+
+class RecursiveLinkedList:
+    """
+    A recursive linked list implementation.
+
+    This class demonstrates how to implement a linked list using
+    recursive methods for various operations.
+    """
+
+    def __init__(self):
+        """Initialize an empty recursive linked list."""
+        self.head = None
+        self.size = 0
+
+    def add_first(self, element):
+        """
+        Add an element to the front of the list.
+
+        Args:
+            element: The element to add
+        """
+        new_node = RecursiveLinkedNode(element)
+        new_node.next = self.head
+        self.head = new_node
+        self.size += 1
+
+    def remove_first(self):
+        """
+        Remove and return the first element from the list.
+
+        Returns:
+            The removed node
+
+        Raises:
+            IndexError: If the list is empty
+        """
+        if self.head is None:
+            raise IndexError("Cannot remove from empty list")
+
+        removed_node = self.head
+        self.head = self.head.next
+        self.size -= 1
+        return removed_node
+
+    def length(self):
+        """
+        Get the length of the list recursively.
+
+        Returns:
+            The number of elements in the list
+        """
+        return self._length_recursive(self.head)
+
+    def _length_recursive(self, node):
+        """
+        Helper method to calculate length recursively.
+
+        Args:
+            node: Current node
+
+        Returns:
+            Length from this node to the end
+        """
+        if node is None:
+            return 0
+        return 1 + self._length_recursive(node.next)
+
+    def first(self):
+        """
+        Get the first element in the list.
+
+        Returns:
+            The first element
+
+        Raises:
+            IndexError: If the list is empty
+        """
+        if self.head is None:
+            raise IndexError("List is empty")
+        return self.head.get_element()
+
+    def last(self):
+        """
+        Get the last element in the list recursively.
+
+        Returns:
+            The last element
+
+        Raises:
+            IndexError: If the list is empty
+        """
+        if self.head is None:
+            raise IndexError("List is empty")
+        return self._last_recursive(self.head)
+
+    def _last_recursive(self, node):
+        """
+        Helper method to find last element recursively.
+
+        Args:
+            node: Current node
+
+        Returns:
+            The last element
+        """
+        if node.next is None:
+            return node.get_element()
+        return self._last_recursive(node.next)
+
+    def recursive_print(self):
+        """Print all elements of the list recursively."""
+        self._print_recursive(self.head)
+        print()
+
+    def _print_recursive(self, node):
+        """
+        Helper method to print recursively.
+
+        Args:
+            node: Current node
+        """
+        if node is None:
+            return
+        print(node.get_element(), end=" ")
+        self._print_recursive(node.next)
+
+    def __str__(self):
+        """
+        Return string representation of the list.
+
+        Returns:
+            String representation of the list
+        """
+        elements = []
+        current = self.head
+        while current:
+            elements.append(str(current.get_element()))
+            current = current.next
+        return " -> ".join(elements)
+
+    def __len__(self):
+        """Return the size of the list."""
+        return self.size
+
+
 # Demonstration functions
 def create_sample_list():
     """Create a sample linked list for testing."""

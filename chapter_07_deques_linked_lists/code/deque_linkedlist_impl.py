@@ -25,6 +25,18 @@ class Node:
     def __str__(self):
         return f"Node({self.data})"
 
+    def get_element(self):
+        """Return the data element stored in this node."""
+        return self.data
+
+    def get_next(self):
+        """Return the next node."""
+        return self.next
+
+    def set_next(self, node):
+        """Set the next node."""
+        self.next = node
+
 
 class DoublyNode:
     """
@@ -40,6 +52,18 @@ class DoublyNode:
 
     def __str__(self):
         return f"DoublyNode({self.data})"
+
+    def get_element(self):
+        """Return the data element stored in this node."""
+        return self.data
+
+    def get_next(self):
+        """Return the next node."""
+        return self.next
+
+    def get_prev(self):
+        """Return the previous node."""
+        return self.prev
 
 
 class LinkedList:
@@ -132,6 +156,14 @@ class LinkedList:
         """Return cached size. Time: O(1)"""
         return self._size
 
+    def is_empty(self):
+        """Check if list is empty. O(1) time."""
+        return self._size == 0
+
+    def length(self):
+        """Return the length of the list. Alias for __len__()."""
+        return self._size
+
     def __str__(self):
         """String representation of the list."""
         if not self.head:
@@ -150,6 +182,40 @@ class LinkedList:
         while current:
             yield current.data
             current = current.next
+
+    # Alias methods for compatibility with notebook API
+    def add_first(self, data):
+        """Add item to beginning of list. Alias for prepend()."""
+        self.prepend(data)
+
+    def add_last(self, data):
+        """Add item to end of list. Alias for append()."""
+        self.append(data)
+
+    def first(self):
+        """Return the first element in the list."""
+        if not self.head:
+            return None
+        return self.head.data
+
+    def last(self):
+        """Return the last element in the list."""
+        current = self.head
+        if not current:
+            return None
+        while current.next:
+            current = current.next
+        return current.data
+
+    def remove_first(self):
+        """Remove and return the first item from the list."""
+        if not self.head:
+            raise IndexError("remove_first from empty list")
+
+        item = self.head.data
+        self.head = self.head.next
+        self._size -= 1
+        return item
 
 
 class DoublyLinkedList:
@@ -229,6 +295,14 @@ class DoublyLinkedList:
     def __len__(self):
         return self._size
 
+    def is_empty(self):
+        """Check if list is empty. O(1) time."""
+        return self._size == 0
+
+    def length(self):
+        """Return the length of the list. Alias for __len__()."""
+        return self._size
+
     def __str__(self):
         if not self.head:
             return "DoublyLinkedList([])"
@@ -239,6 +313,48 @@ class DoublyLinkedList:
             items.append(str(current.data))
             current = current.next
         return f"DoublyLinkedList([{', '.join(items)}])"
+
+    # Alias methods for compatibility with notebook API
+    def add_first(self, data):
+        """Add item to beginning of list. Alias for prepend()."""
+        self.prepend(data)
+
+    def add_last(self, data):
+        """Add item to end of list. Alias for append()."""
+        self.append(data)
+
+    def first(self):
+        """Return the first element in the list."""
+        if not self.head:
+            return None
+        return self.head.data
+
+    def last(self):
+        """Return the last element in the list."""
+        if not self.tail:
+            return None
+        return self.tail.data
+
+    def concat(self, other):
+        """Concatenate another list to this one. Returns a new list with copies of all elements."""
+        if not isinstance(other, DoublyLinkedList):
+            raise TypeError("Can only concatenate with another DoublyLinkedList")
+
+        result = DoublyLinkedList()
+
+        # Copy elements from this list
+        current = self.head
+        while current:
+            result.append(current.data)
+            current = current.next
+
+        # Copy elements from other list
+        current = other.head
+        while current:
+            result.append(current.data)
+            current = current.next
+
+        return result
 
 
 class Deque:
@@ -293,7 +409,7 @@ class Deque:
         """
         if self.is_empty():
             raise IndexError("first of empty deque")
-        return self._list.head.data
+        return self._list.first()
 
     def last(self):
         """
@@ -303,7 +419,7 @@ class Deque:
         """
         if self.is_empty():
             raise IndexError("last of empty deque")
-        return self._list.tail.data
+        return self._list.last()
 
     def is_empty(self):
         """Check if deque is empty. Time: O(1)"""

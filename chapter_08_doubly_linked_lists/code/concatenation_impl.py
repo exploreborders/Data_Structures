@@ -75,6 +75,10 @@ class DoublyLinkedList:
         """Check if list is empty. O(1) time."""
         return self._size == 0
 
+    def length(self):
+        """Return the length of the list. Alias for __len__()."""
+        return self._size
+
     def __len__(self):
         """Return cached size. O(1) time."""
         return self._size
@@ -434,7 +438,10 @@ def demonstrate_concatenation_performance():
     print("Performance Comparison:")
     print(f"Efficient concatenation: {efficient_time:.6f} seconds")
     print(f"Copy-based concatenation: {copy_time:.6f} seconds")
-    print(f"Speedup: {copy_time / efficient_time:.1f}x faster")
+    if efficient_time > 0:
+        print(f"Speedup: {copy_time / efficient_time:.1f}x faster")
+    else:
+        print("Speedup: N/A (efficient concatenation was too fast to measure)")
 
     return efficient_time, copy_time
 

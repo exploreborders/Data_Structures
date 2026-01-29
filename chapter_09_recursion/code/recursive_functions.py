@@ -247,3 +247,69 @@ def count_elements_recursive(items):
         return 0
     else:  # Recursive case: 1 + count of rest
         return 1 + count_elements_recursive(items[1:])
+
+
+def list_sum(numbers):
+    """
+    Calculate the sum of all elements in a list using recursion.
+
+    Args:
+        numbers: List of numbers
+
+    Returns:
+        Sum of all elements
+
+    Examples:
+        >>> list_sum([1, 2, 3, 4, 5])
+        15
+        >>> list_sum([])
+        0
+    """
+    if not numbers:  # Base case: empty list
+        return 0
+    else:  # Recursive case: head + sum of tail
+        return numbers[0] + list_sum(numbers[1:])
+
+
+def string_length(s):
+    """
+    Calculate the length of a string using recursion.
+
+    Args:
+        s: String to measure
+
+    Returns:
+        Length of the string
+
+    Examples:
+        >>> string_length("")
+        0
+        >>> string_length("hello")
+        5
+    """
+    if s == "":  # Base case: empty string
+        return 0
+    else:  # Recursive case: 1 + length of rest
+        return 1 + string_length(s[1:])
+
+
+def reverse_string(s):
+    """
+    Reverse a string using recursion.
+
+    Args:
+        s: String to reverse
+
+    Returns:
+        Reversed string
+
+    Examples:
+        >>> reverse_string("")
+        ""
+        >>> reverse_string("hello")
+        "olleh"
+    """
+    if s == "":  # Base case: empty string
+        return ""
+    else:  # Recursive case: last char + reverse of rest
+        return s[-1] + reverse_string(s[:-1])

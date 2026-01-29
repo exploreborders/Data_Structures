@@ -126,13 +126,20 @@ class Graph(Generic[T]):
     def get_edges(self) -> List[Tuple[T, T, float]]:
         """Get all edges in the graph."""
         edges = []
+        seen = set()
         for u, neighbors in self.adj_list.items():
             for v, weight in neighbors:
-                edges.append((u, v, weight))
-                if not self.directed:
+                edge = (u, v, weight)
+                reverse_edge = (v, u, weight)
+                
+                if self.directed:
+                    edges.append(edge)
+                else:
                     # For undirected graphs, avoid duplicate edges
-                    if (v, u, weight) not in edges:
-                        edges.append((v, u, weight))
+                    if edge not in seen and reverse_edge not in seen:
+                        edges.append(edge)
+                        seen.add(edge)
+                        seen.add(reverse_edge)
         return edges
 
 
