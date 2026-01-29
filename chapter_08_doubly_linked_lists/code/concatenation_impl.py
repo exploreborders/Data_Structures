@@ -19,6 +19,18 @@ class DoublyNode:
     def __str__(self):
         return f"DoublyNode({self.data})"
 
+    def get_element(self):
+        """Return the data element stored in this node."""
+        return self.data
+
+    def get_next(self):
+        """Return the next node."""
+        return self.next
+
+    def get_prev(self):
+        """Return the previous node."""
+        return self.prev
+
 
 class DoublyLinkedList:
     """
@@ -59,6 +71,10 @@ class DoublyLinkedList:
             self.head = new_node
         self._size += 1
 
+    def is_empty(self):
+        """Check if list is empty. O(1) time."""
+        return self._size == 0
+
     def __len__(self):
         """Return cached size. O(1) time."""
         return self._size
@@ -81,6 +97,55 @@ class DoublyLinkedList:
         while current:
             yield current.data
             current = current.next
+
+    # Alias methods for compatibility with notebook API
+    def add_first(self, data):
+        """Add item to beginning of list. Alias for prepend()."""
+        self.prepend(data)
+
+    def add_last(self, data):
+        """Add item to end of list. Alias for append()."""
+        self.append(data)
+
+    def first(self):
+        """Return the first node in the list."""
+        return self.head
+
+    def last(self):
+        """Return the last node in the list."""
+        return self.tail
+
+    def remove_first(self):
+        """Remove and return the first node from the list."""
+        if not self.head:
+            raise IndexError("Cannot remove from empty list")
+        
+        removed_node = self.head
+        self.head = self.head.next
+        if self.head:
+            self.head.prev = None
+        else:
+            self.tail = None
+        self._size -= 1
+        return removed_node
+
+    def remove_last(self):
+        """Remove and return the last node from the list."""
+        if not self.tail:
+            raise IndexError("Cannot remove from empty list")
+        
+        removed_node = self.tail
+        self.tail = self.tail.prev
+        if self.tail:
+            self.tail.next = None
+        else:
+            self.head = None
+        self._size -= 1
+        return removed_node
+
+    def concat(self, other):
+        """Concatenate another list to this one. Alias for concatenate_copy()."""
+        return self.concatenate_copy(other)
 
     # Chapter 8: Concatenation methods
 
