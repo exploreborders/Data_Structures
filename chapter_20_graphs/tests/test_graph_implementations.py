@@ -7,8 +7,8 @@ Comprehensive tests covering graph representations, traversals, shortest paths, 
 import sys
 import os
 
-# Add to code directory to path
-sys.path.insert(0, os.path.join(os.getcwd(), "..", "code"))
+# Add code directory to path for imports
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "code")))
 
 from graph_implementations import (
     Graph,
@@ -296,6 +296,7 @@ class TestGraphAnalysis:
         # Component 2: D-E
         graph.add_edge("D", "E")
         # Component3: F (isolated)
+        graph.add_vertex("F")
 
         components = GraphAnalysis.connected_components(graph)
 

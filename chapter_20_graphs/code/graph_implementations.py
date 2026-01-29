@@ -57,17 +57,10 @@ class Graph(Generic[T]):
         self.add_vertex(v)
 
         # Add edge from u to v
-        if self.weighted:
-            self.adj_list[u].append((v, weight))
-        else:
-            self.adj_list[u].append((v, 1.0))
+        self.adj_list[u].append((v, weight))
 
-        if not self.directed:
-            # For undirected graphs, add reverse edge
-            if self.weighted:
-                self.adj_list[v].append((u, weight))
-            else:
-                self.adj_list[v].append((u, 1.0))
+        if not self.directed and u != v:  # Avoid duplicate self-loop
+            self.adj_list[v].append((u, weight))
 
     def remove_vertex(self, vertex: T) -> None:
         """Remove vertex and all its edges."""
@@ -172,7 +165,11 @@ class GraphAnalysis:
 
         for vertex in graph.vertices:
             if vertex not in visited:
-                component = GraphTraversal.dfs(graph, vertex)
+                # For isolated vertices, create a component with just the vertex
+                if not graph.get_neighbors(vertex):
+                    component = [vertex]
+                else:
+                    component = GraphTraversal.dfs(graph, vertex)
                 components.append(component)
                 visited.update(component)
 
@@ -182,26 +179,23 @@ class GraphAnalysis:
     def has_cycle(graph: Graph[T]) -> bool:
         """Detect if graph has cycle using DFS."""
         visited = set()
-        recursion_stack = set()
 
-        def has_cycle_visit(vertex: T) -> bool:
+        def has_cycle_visit(vertex: T, parent: Optional[T]) -> bool:
             visited.add(vertex)
-            recursion_stack.add(vertex)
 
             for neighbor_info in graph.get_neighbors(vertex):
                 neighbor = neighbor_info[0]
                 if neighbor not in visited:
-                    if has_cycle_visit(neighbor):
+                    if has_cycle_visit(neighbor, vertex):
                         return True
-                elif neighbor in recursion_stack:
+                elif neighbor != parent:
                     return True
 
-            recursion_stack.remove(vertex)
             return False
 
         for vertex in graph.vertices:
             if vertex not in visited:
-                if has_cycle_visit(vertex):
+                if has_cycle_visit(vertex, None):
                     return True
 
         return False
@@ -505,7 +499,7 @@ class ShortestPaths:
     @staticmethod
     def reconstruct_path(
         predecessors: Dict[T, Optional[T]], start: T, end: T
-    ) -> List[T]:
+    ) -> Optional[List[T]]:
         """
         Reconstruct path from predecessor array.
 
@@ -515,10 +509,10 @@ class ShortestPaths:
             end: Target vertex
 
         Returns:
-            List of vertices in path from start to end
+            List of vertices in path from start to end, or None if no path exists
         """
         if end not in predecessors or predecessors[end] is None and end != start:
-            return []
+            return None
         elif end == start:
             return [start]  # Handle case where start equals end
 

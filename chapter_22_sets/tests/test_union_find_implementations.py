@@ -4,10 +4,55 @@ Tests for Chapter 22: Sets - Union-Find (Disjoint Set Union) Implementation
 Comprehensive tests covering Union-Find operations, performance, and applications.
 """
 
-import pytest
-import random
+import sys
+import os
 import time
-from chapter_22_sets.code.union_find_implementations import (
+
+
+def run_all_tests():
+    """Run all test functions in this module."""
+    print("Running Chapter 22 Union-Find Tests...")
+    print("=" * 60)
+    
+    # Collect all test classes
+    test_classes = [
+        TestUnionFind(),
+        TestUnionFindAnalysis(),
+        TestKruskalWithUnionFind(),
+        TestConnectivityChecker(),
+        TestUnionFindPerformance(),
+        TestUnionFindEdgeCases(),
+    ]
+    
+    all_passed = True
+    
+    for test_class in test_classes:
+        print(f"\nRunning {test_class.__class__.__name__}:")
+        print("-" * 40)
+        
+        # Get all test methods
+        test_methods = [method for method in dir(test_class) if method.startswith("test_")]
+        
+        for method_name in test_methods:
+            try:
+                test_method = getattr(test_class, method_name)
+                test_method()
+                print(f"✓ {method_name}")
+            except Exception as e:
+                print(f"✗ {method_name}: {e}")
+                all_passed = False
+    
+    print("\n" + "=" * 60)
+    if all_passed:
+        print("All tests passed! ✓")
+    else:
+        print("Some tests failed! ✗")
+    
+    return all_passed
+
+# Add code directory to path for imports (relative to this test file)
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "code"))
+from union_find_implementations import (
     UnionFind,
     UnionFindAnalysis,
     KruskalWithUnionFind,
@@ -151,14 +196,23 @@ class TestUnionFind:
         uf = UnionFind()
 
         # Element not found
-        with pytest.raises(ValueError):
+        try:
             uf.find("A")
+            assert False, "Expected ValueError when finding non-existent element"
+        except ValueError:
+            pass
 
-        with pytest.raises(ValueError):
+        try:
             uf.union("A", "B")
+            assert False, "Expected ValueError when unioning non-existent elements"
+        except ValueError:
+            pass
 
-        with pytest.raises(ValueError):
+        try:
             uf.connected("A", "B")
+            assert False, "Expected ValueError when checking connectivity of non-existent elements"
+        except ValueError:
+            pass
 
     def test_string_representations(self):
         """Test string representations."""
@@ -533,6 +587,7 @@ class TestUnionFindEdgeCases:
             ("union", ["G", "H"]),
             ("union", ["H", "I"]),
             ("connected", ["G", "I"]),
+            ("union", ["G", "J"]),  # Union J with G to include it in the set
         ]
 
         for op, args in operations:
@@ -548,3 +603,48 @@ class TestUnionFindEdgeCases:
         assert uf.connected("G", "I")  # G-H-I
         assert not uf.connected("A", "G")
         assert uf.get_set_count() == 3  # {A,B,C,D}, {E,F}, {G,H,I,J}
+
+if __name__ == "__main__":
+    # Run all test methods
+    test_classes = [
+        TestUnionFind,
+        TestUnionFindAnalysis,
+        TestKruskalWithUnionFind,
+        TestConnectivityChecker,
+        TestUnionFindPerformance,
+        TestUnionFindEdgeCases,
+    ]
+
+    total_passed = 0
+    total_failed = 0
+
+    for testClass in test_classes:
+        instance = testClass()
+        methods = [method for method in dir(instance) if method.startswith("test_")]
+
+        print(f"\nRunning {testClass.__name__} tests...")
+        class_passed = 0
+        class_failed = 0
+
+        for method_name in methods:
+            try:
+                method = getattr(instance, method_name)
+                method()
+                print(f"  ✓ {method_name}")
+                class_passed += 1
+            except Exception as e:
+                print(f"  ✗ {method_name}: {e}")
+                class_failed += 1
+
+        print(f"  Results: {class_passed} passed, {class_failed} failed")
+        total_passed += class_passed
+        total_failed += class_failed
+
+    print(
+        f"\n🎉 Final Results: {total_passed} tests passed, {total_failed} tests failed"
+    )
+
+    if total_failed > 0:
+        print("Some tests failed - check implementation compatibility")
+    else:
+        print("🎉 All Chapter 22 sets tests passed successfully!")
