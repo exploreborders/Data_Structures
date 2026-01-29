@@ -1,5 +1,6 @@
 import sys
 import os
+import unittest
 
 # Add root directory to path so imports work
 sys.path.insert(0, os.path.join(os.getcwd(), "..", ".."))
@@ -32,7 +33,7 @@ def test_add_numbers():
 
 
 # 4.2 Unit Testing with unittest framework style tests
-class TestCalculator:
+class TestCalculator(unittest.TestCase):
     """Unit tests for the Calculator class."""
 
     def setUp(self):
@@ -91,7 +92,7 @@ class TestCalculator:
 
 
 # 4.3 Test-Driven Development - Stack tests
-class TestStack:
+class TestStack(unittest.TestCase):
     """TDD-developed tests for Stack class."""
 
     def setUp(self):
@@ -154,7 +155,7 @@ class TestStack:
 
 
 # 4.4 What to Test - Edge cases and error conditions
-class TestStringProcessor:
+class TestStringProcessor(unittest.TestCase):
     """Tests for StringProcessor including edge cases."""
 
     def setUp(self):
@@ -221,7 +222,7 @@ class TestStringProcessor:
 
 
 # 4.5 Testing and Object-Oriented Design
-class TestBankAccount:
+class TestBankAccount(unittest.TestCase):
     """Tests for BankAccount demonstrating OOP testing."""
 
     def setUp(self):

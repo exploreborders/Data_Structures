@@ -10,7 +10,10 @@ import os
 import random
 import time
 
-sys.path.insert(0, os.path.join(os.getcwd(), "..", "code"))
+# Add chapter code directory to path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+code_dir = os.path.join(current_dir, "..", "code")
+sys.path.insert(0, code_dir)
 
 from selection_algorithms import SelectionAlgorithms, SelectionAnalysis
 
