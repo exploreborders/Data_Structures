@@ -180,23 +180,50 @@ class GraphAnalysis:
         """Detect if graph has cycle using DFS."""
         visited = set()
 
-        def has_cycle_visit(vertex: T, parent: Optional[T]) -> bool:
-            visited.add(vertex)
+        if graph.directed:
+            # For directed graphs, use recursion stack to detect back edges
+            recursion_stack = set()
 
-            for neighbor_info in graph.get_neighbors(vertex):
-                neighbor = neighbor_info[0]
-                if neighbor not in visited:
-                    if has_cycle_visit(neighbor, vertex):
+            def has_cycle_visit_directed(vertex: T) -> bool:
+                visited.add(vertex)
+                recursion_stack.add(vertex)
+
+                for neighbor_info in graph.get_neighbors(vertex):
+                    neighbor = neighbor_info[0]
+                    if neighbor not in visited:
+                        if has_cycle_visit_directed(neighbor):
+                            return True
+                    elif neighbor in recursion_stack:
+                        # Back edge detected, cycle exists
                         return True
-                elif neighbor != parent:
-                    return True
 
-            return False
+                recursion_stack.remove(vertex)
+                return False
 
-        for vertex in graph.vertices:
-            if vertex not in visited:
-                if has_cycle_visit(vertex, None):
-                    return True
+            for vertex in graph.vertices:
+                if vertex not in visited:
+                    if has_cycle_visit_directed(vertex):
+                        return True
+        else:
+            # For undirected graphs, track parent vertex
+            def has_cycle_visit_undirected(vertex: T, parent: Optional[T]) -> bool:
+                visited.add(vertex)
+
+                for neighbor_info in graph.get_neighbors(vertex):
+                    neighbor = neighbor_info[0]
+                    if neighbor not in visited:
+                        if has_cycle_visit_undirected(neighbor, vertex):
+                            return True
+                    elif neighbor != parent:
+                        # Back edge detected (excluding parent)
+                        return True
+
+                return False
+
+            for vertex in graph.vertices:
+                if vertex not in visited:
+                    if has_cycle_visit_undirected(vertex, None):
+                        return True
 
         return False
 
