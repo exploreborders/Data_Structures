@@ -14,9 +14,9 @@ This comprehensive repository provides a complete, hands-on learning environment
 
 **Status: Complete ✅**
 - **22 chapters** fully implemented with working code
-- **25,000+ lines** of Python implementations and documentation
-- **2,000+ unit tests** ensuring correctness and robustness
-- **50+ interactive examples** with visualizations and demonstrations
+- **26,864 lines** of Python implementations and documentation
+- **570+ unit tests** ensuring correctness and robustness
+- **24+ interactive examples** with visualizations and demonstrations
 - **Educational excellence** with performance analysis and algorithmic insights
 
 ## 🚀 Quick Start
@@ -29,8 +29,8 @@ This comprehensive repository provides a complete, hands-on learning environment
 ### Basic Exploration
 ```bash
 # Clone and explore
-git clone https://github.com/your-org/data-structures-python.git
-cd data-structures-python
+git clone https://github.com/your-org/DataStruktur.git
+cd DataStruktur
 
 # Run a simple example
 cd chapter_02_basic_python/examples
@@ -76,13 +76,23 @@ jupyter lab notebooks/
 | Notebook | Chapter | Focus | Interactive Features |
 |----------|---------|-------|---------------------|
 | **[`index.ipynb`](notebooks/index.ipynb)** | Overview | Curriculum guide | Progress tracking, navigation |
+| **[`chapter_01_overview.ipynb`](notebooks/chapter_01_overview.ipynb)** | 1 | Educational Philosophy | Course structure, learning approach |
+| **[`chapter_02_basic_python.ipynb`](notebooks/chapter_02_basic_python.ipynb)** | 2 | Python Fundamentals | Core concepts, syntax, data types |
+| **[`chapter_03_object_oriented_programming.ipynb`](notebooks/chapter_03_object_oriented_programming.ipynb)** | 3 | OOP Concepts | Classes, inheritance, design patterns |
+| **[`chapter_04_testing.ipynb`](notebooks/chapter_04_testing.ipynb)** | 4 | Testing Strategies | Unit testing, TDD, test design |
 | **[`chapter_05_complexity.ipynb`](notebooks/chapter_05_complexity.ipynb)** | 5 | Running Time Analysis | Complexity visualizations, timing demos |
+| **[`chapter_06_stacks_and_queues.ipynb`](notebooks/chapter_06_stacks_and_queues.ipynb)** | 6 | Stack & Queue ADTs | Abstract data types, error handling |
+| **[`chapter_07_deques_linked_lists.ipynb`](notebooks/chapter_07_deques_linked_lists.ipynb)** | 7 | Deques & Linked Lists | Dynamic data structures, operations |
+| **[`chapter_08_doubly_linked_lists.ipynb`](notebooks/chapter_08_doubly_linked_lists.ipynb)** | 8 | Doubly Linked Lists | Advanced pointer manipulation, concatenation |
+| **[`chapter_09_recursion.ipynb`](notebooks/chapter_09_recursion.ipynb)** | 9 | Recursive Algorithms | Recursion, call stack, memoization |
 | **[`chapter_10_dynamic_programming.ipynb`](notebooks/chapter_10_dynamic_programming.ipynb)** | 10 | Dynamic Programming | DP tables, knapsack, LCS, coin change |
+| **[`chapter_11_binary_search.ipynb`](notebooks/chapter_11_binary_search.ipynb)** | 11 | Binary Search | Divide-and-conquer search, variants |
 | **[`chapter_12_14_sorting.ipynb`](notebooks/chapter_12_14_sorting.ipynb)** | 12-14 | Sorting & Selection | Algorithm comparisons, performance analysis, quickselect |
 | **[`chapter_15_hash_tables.ipynb`](notebooks/chapter_15_hash_tables.ipynb)** | 15 | Hash Tables | Interactive hash functions, collision resolution, performance |
 | **[`chapter_16_18_trees.ipynb`](notebooks/chapter_16_18_trees.ipynb)** | 16-18 | Trees & BSTs | Interactive tree structures, traversals, BST operations, AVL balancing |
 | **[`chapter_19_heaps.ipynb`](notebooks/chapter_19_heaps.ipynb)** | 19 | Priority Queues & Heaps | Interactive heap operations, priority queue applications, heap sort |
 | **[`chapter_20_21_graphs.ipynb`](notebooks/chapter_20_21_graphs.ipynb)** | 20-21 | Graph Algorithms | Interactive graph representations, traversals, shortest paths, MSTs |
+| **[`chapter_22_union_find.ipynb`](notebooks/chapter_22_union_find.ipynb)** | 22 | Union-Find Data Structure | Disjoint sets, path compression, Kruskal's algorithm |
 
 ### 🎮 Interactive Features
 
@@ -104,10 +114,26 @@ jupyter lab notebooks/
 ## 🗂️ Repository Architecture
 
 ```
-data-structures-python/
+DataStruktur/
 ├── 📓 notebooks/                   # Interactive Jupyter notebooks
 │   ├── index.ipynb                 # Curriculum overview & navigation
-│   └── chapter_05_complexity.ipynb # Complexity analysis with visualizations
+│   ├── chapter_01_overview.ipynb
+│   ├── chapter_02_basic_python.ipynb
+│   ├── chapter_03_object_oriented_programming.ipynb
+│   ├── chapter_04_testing.ipynb
+│   ├── chapter_05_complexity.ipynb
+│   ├── chapter_06_stacks_and_queues.ipynb
+│   ├── chapter_07_deques_linked_lists.ipynb
+│   ├── chapter_08_doubly_linked_lists.ipynb
+│   ├── chapter_09_recursion.ipynb
+│   ├── chapter_10_dynamic_programming.ipynb
+│   ├── chapter_11_binary_search.ipynb
+│   ├── chapter_12_14_sorting.ipynb
+│   ├── chapter_15_hash_tables.ipynb
+│   ├── chapter_16_18_trees.ipynb
+│   ├── chapter_19_heaps.ipynb
+│   ├── chapter_20_21_graphs.ipynb
+│   └── chapter_22_union_find.ipynb
 ├── 📁 chapter_01_overview/         # Educational philosophy
 │   ├── code/                      # Implementation examples
 │   ├── tests/                     # Unit tests
@@ -115,20 +141,29 @@ data-structures-python/
 │   ├── notes.md                   # Personal insights
 │   └── README.md                  # Chapter documentation
 ├── 📁 chapter_02_basic_python/     # Python fundamentals
-├── 📁 chapter_12_sorting_algorithms/  # Advanced sorting
-│   ├── code/heap_sort.py         # Multiple sorting variants
-│   ├── tests/test_sorters.py      # Comprehensive testing
-│   ├── examples/sort_comparison.py # Performance demos
-│   └── notes.md                   # Algorithm trade-offs
+├── 📁 chapter_03_object_oriented_programming/  # OOP concepts
+├── 📁 chapter_04_testing/         # Testing strategies
+├── 📁 chapter_05_running_time_analysis/  # Complexity analysis
+├── 📁 chapter_06_stacks_and_queues/  # Stack & Queue ADTs
+├── 📁 chapter_07_deques_linked_lists/  # Deques & Linked Lists
+├── 📁 chapter_08_doubly_linked_lists/  # Doubly Linked Lists
+├── 📁 chapter_09_recursion/       # Recursive algorithms
+├── 📁 chapter_10_dynamic_programming/  # Dynamic Programming
+├── 📁 chapter_11_binary_search/   # Binary Search
+├── 📁 chapter_12_sorting_algorithms/  # Basic sorting
+├── 📁 chapter_13_sorting_divide_conquer/  # Merge & Quick sort
+├── 📁 chapter_14_selection/       # Selection algorithms
+├── 📁 chapter_15_mappings_hash_tables/  # Hash Tables
+├── 📁 chapter_16_trees/           # Tree structures
+├── 📁 chapter_17_binary_search_trees/  # BST operations
+├── 📁 chapter_18_balanced_trees/  # AVL trees
+├── 📁 chapter_19_priority_queues/  # Heaps & Priority Queues
 ├── 📁 chapter_20_graphs/          # Graph theory & algorithms
-│   ├── code/graph_implementations.py    # DFS, BFS, Shortest paths
-│   ├── tests/test_graph_implementations.py
-│   ├── examples/graph_demonstrations.py
-│   └── README.md                  # Graph algorithm guide
-├── 🧪 testing_framework/           # Shared testing utilities
-├── 📊 performance_analysis/        # Benchmarking tools
-├── 🔧 scripts/                     # Utility scripts
-└── 📚 docs/                        # Additional documentation
+├── 📁 chapter_21_graph_search/    # Advanced graph algorithms
+├── 📁 chapter_22_sets/            # Union-Find data structure
+├── requirements.txt               # Project dependencies
+├── LICENSE                        # MIT License
+└── README.md                      # Project documentation
 ```
 
 ## 📚 Complete Curriculum Coverage
@@ -171,9 +206,9 @@ data-structures-python/
 
 ### ✅ **Complete Algorithm Library**
 - **22 chapters** covering 40+ data structures and algorithms
-- **25,000+ lines** of production-quality Python code
-- **2,000+ unit tests** with comprehensive correctness verification
-- **50+ interactive examples** demonstrating real-world applications
+- **26,864 lines** of production-quality Python code
+- **570+ unit tests** with comprehensive correctness verification
+- **24+ interactive examples** demonstrating real-world applications
 
 ### 🧪 **Rigorous Testing & Quality**
 - **Edge case coverage** for all implementations and algorithms
@@ -198,9 +233,9 @@ data-structures-python/
 | Metric | Value | Status |
 |--------|-------|--------|
 | 📚 **Chapters** | 22/22 | ✅ Complete |
-| 💻 **Code Lines** | 25,379 | 🏆 Production |
-| 🧪 **Tests** | 2,000+ | ✅ Comprehensive |
-| 🎯 **Examples** | 53 | 🎉 Interactive |
+| 💻 **Code Lines** | 26,864 | 🏆 Production |
+| 🧪 **Tests** | 570+ | ✅ Comprehensive |
+| 🎯 **Examples** | 24+ | 🎉 Interactive |
 | 📖 **Documentation** | 10,466 | 📚 Educational |
 | 🔧 **Tools** | 100% | 🛠️ Professional |
 
@@ -256,7 +291,7 @@ data-structures-python/
 ### 🚀 **Getting Started**
 
 1. **Fork** the repository on GitHub
-2. **Clone** your fork: `git clone https://github.com/your-username/data-structures-python.git`
+2. **Clone** your fork: `git clone https://github.com/your-username/DataStruktur.git`
 3. **Create** a feature branch: `git checkout -b feature/your-improvement`
 4. **Make** your changes with comprehensive tests
 5. **Run** the full test suite: `pytest`
@@ -277,7 +312,7 @@ data-structures-python/
 # Set up development environment
 python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements-dev.txt
+pip install -r requirements.txt
 
 # Run full test suite with coverage
 pytest --cov=chapter_* --cov-report=html
@@ -349,6 +384,6 @@ This repository is licensed under the MIT License - see the [LICENSE](LICENSE) f
 
 **"The best way to learn is to implement from scratch."**
 
-*This repository proves it - 22 chapters, 25K+ lines of code, one algorithm at a time.* 🚀
+*This repository proves it - 22 chapters, 26,864 lines of code, one algorithm at a time.* 🚀
 
 **Happy Algorithming!** 🧠✨
